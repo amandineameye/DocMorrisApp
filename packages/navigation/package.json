@@ -1,0 +1,25 @@
+{
+  "name": "@repo/navigation",
+  "version": "1.0.0",
+  "private": true,
+  "exports": {
+    "./TabsNavigator": "./src/TabsNavigator.tsx",
+    "./types": "./src/types.ts"
+  },
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "check-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "@turbo/gen": "2.5.0",
+    "eslint": "9.27.0",
+    "typescript": "5.8.2"
+  },
+  "dependencies": {
+    "@react-navigation/bottom-tabs": "^7.3.13",
+    "@react-navigation/native": "^7.1.9"
+  }
+}
