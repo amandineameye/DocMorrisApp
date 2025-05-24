@@ -5,8 +5,7 @@
   "version": "1.0.0",
   "private": true,
   "exports": {
-  "./docMorris": "./src/docMorris.ts",
-  "./brandB": "./src/brandB.ts"
+  "./*": "./src/*.ts"
 },
   "scripts": {
     "dev": "tsc --watch",

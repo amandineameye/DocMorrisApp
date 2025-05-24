@@ -1,7 +1,7 @@
-import { DefaultTheme } from 'styled-components'
+import { ThemeType } from './types'
 
 //Color names should be renamed with more descriptive names like "main", "accent" instead of "primary1".
-export const docMorrisTheme: DefaultTheme = {
+export const docMorrisTheme: ThemeType = {
   colors: {
     primary: {
       primary1: '#00463D',
