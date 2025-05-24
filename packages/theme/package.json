@@ -1,9 +1,29 @@
+
+
 {
   "name": "@repo/theme",
   "version": "1.0.0",
   "private": true,
   "exports": {
-    "./*": "./*.ts"
+  "./docMorris": "./src/docMorris.ts",
+  "./brandB": "./src/brandB.ts"
+},
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "check-types": "tsc --noEmit"
   },
-  "types": "styled.d.ts"
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "@turbo/gen": "2.5.0",
+    "eslint": "9.27.0",
+    "typescript": "5.8.2"
+  },
+  "peerDependencies": {
+  "styled-components": "6.1.18"
 }
+}
+
+
+
