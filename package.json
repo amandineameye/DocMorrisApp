@@ -8,10 +8,12 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types"
   },
-  "dependencies": { 
+  "dependencies": {
+    "@babel/runtime": "7.27.1",
     "react": "19.0.0",
     "react-native": "0.79.2",
-    "@babel/runtime": "7.27.1"},
+    "styled-components": "6.1.18"
+  },
   "devDependencies": {
     "metro-react-native-babel-preset": "0.77.0",
     "prettier": "3.5.3",
