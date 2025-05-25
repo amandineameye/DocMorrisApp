@@ -1,4 +1,3 @@
-import { Screen } from "@repo/ui/screen";
+import { Screen } from '@repo/ui/screen';
 
-
-export const PrescriptionsScreen = () => <Screen label="Prescriptions" />;
+export const PrescriptionsScreen = () => <Screen />;

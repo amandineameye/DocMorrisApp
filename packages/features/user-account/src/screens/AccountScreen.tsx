@@ -1,4 +1,3 @@
-import { Screen } from "@repo/ui/screen";
+import { Screen } from '@repo/ui/screen';
 
-
-export const AccountScreen = () => <Screen label="Account" />;
+export const AccountScreen = () => <Screen />;
