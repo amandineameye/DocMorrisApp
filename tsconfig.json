@@ -1,0 +1,8 @@
+{
+  "files": [],
+  "references": [
+    { "path": "packages/theme" },
+    { "path": "apps/brandb" },
+    { "path": "apps/docmorris" }
+  ]
+}

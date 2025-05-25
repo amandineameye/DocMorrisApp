@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, forwardRef } from 'react';
 import { TextInput, TextInputProps, Keyboard, TouchableOpacity, Animated } from 'react-native';
 import styled from 'styled-components/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { ThemeType } from '@repo/theme/types';
+import { ThemeType } from '@repo/theme/themes/types';
 import { useTheme } from 'styled-components/native';
 
 type SearchBarProps = {

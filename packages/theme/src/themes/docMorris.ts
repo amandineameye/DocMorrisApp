@@ -1,4 +1,4 @@
-import { ThemeType } from './types'
+import { ThemeType } from './types';
 
 //Color names should be renamed with more descriptive names like "main", "accent" instead of "primary1".
 export const docMorrisTheme: ThemeType = {
@@ -172,4 +172,4 @@ export const docMorrisTheme: ThemeType = {
       },
     },
   },
-}
+};

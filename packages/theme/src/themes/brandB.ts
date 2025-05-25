@@ -1,4 +1,4 @@
-import { ThemeType } from './types'
+import { ThemeType } from './types';
 
 export const brandBTheme: ThemeType = {
   colors: {
@@ -171,4 +171,4 @@ export const brandBTheme: ThemeType = {
       },
     },
   },
-}
+};

@@ -5,7 +5,9 @@
   "version": "1.0.0",
   "private": true,
   "exports": {
-  "./*": "./src/*.ts"
+  "./context": "./src/context/BrandContext.tsx",
+  "./themes/types": "./src/themes/types.ts",
+  "./brandConfig": "./src/brandConfig.ts"
 },
   "scripts": {
     "dev": "tsc --watch",
@@ -21,7 +23,11 @@
   },
   "peerDependencies": {
   "styled-components": "6.1.18"
-}
+},
+"dependencies": {
+       "react": "19.0.0",
+    "react-dom": "19.0.0"
+  }
 }
 
 
