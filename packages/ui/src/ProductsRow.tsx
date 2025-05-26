@@ -57,7 +57,7 @@ export const ProductsRow = ({ title, products }: ProductsRowProps) => {
 // Styled Components
 const Section = styled.View`
   margin-top: 20px;
-  height: 380px;
+  height: 350px;
 `;
 
 const RowHeader = styled.View`

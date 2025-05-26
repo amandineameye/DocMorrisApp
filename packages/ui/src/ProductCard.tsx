@@ -152,19 +152,6 @@ const CardContainer = styled.Pressable<{ theme: ThemeType }>`
   margin: 16px 16px 16px 10px;
 `;
 
-const FavoriteWrapper = styled.View<{ theme: ThemeType }>`
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 1;
-  height: 25px;
-  width: 25px;
-  align-items: center;
-  justify-content: center;
-  background-color: ${({ theme }) => theme.colors.secondary.secondary7};
-  border-radius: 12.5px;
-`;
-
 const FavoriteButton = styled.Pressable<{ theme?: ThemeType }>`
   position: absolute;
   top: 12px;
