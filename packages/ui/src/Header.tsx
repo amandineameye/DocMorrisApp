@@ -46,7 +46,7 @@ const WelcomeText = styled.Text<{ theme: ThemeType }>`
 `;
 
 const BrandText = styled.Text<{ theme: ThemeType }>`
-  color: ${({ theme }) => theme.colors.primary.primary1};
+  color: ${({ theme }) => theme.colors.secondary.secondary1};
   font-family: ${({ theme }) => theme.fonts.title['2'].semiBold.fontFamily};
   font-size: ${({ theme }) => theme.fonts.title['2'].semiBold.fontSize}px;
   line-height: ${({ theme }) => theme.fonts.title['2'].semiBold.lineHeight}px;
