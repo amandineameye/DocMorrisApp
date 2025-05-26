@@ -37,7 +37,7 @@ This document outlines the architectural and technical decisions for building a 
 - **react-native-encrypted-storage** — OS-backed secure store for credentials & tokens
 
 ### Monorepo Tooling
-- **Nx** — Project graph, code sharing, affected builds, caching
+- **Turborepo** — Smart caching, incremental and parallel task execution, streamlined code sharing, zero-config monorepo orchestration
 
 ### Native Layer Libraries
 - **react-native-nfc-manager** — NFC for e-prescriptions  
@@ -71,8 +71,8 @@ This document outlines the architectural and technical decisions for building a 
 ### Repository Structure
 ```bash
 apps/
-  brandA-app/
-  brandB-app/
+  docmorris/
+  brandb/
   shared-e2e/
 
 packages/
@@ -87,6 +87,7 @@ packages/
   navigation/
   theme/
   config/
+  stores/
 
 libs/
   utils/
@@ -104,41 +105,26 @@ libs/
 - It promotes code reuse, avoids duplication, and simplifies cross-team communication and integration.
 - All features, apps, and libraries live in the same repository, reducing versioning conflicts and siloed development.
 
-#### Why We Chose Nx
-- Nx provides first-class support for React Native via plugins, generators, affected command support, and a powerful dependency graph.
-- Its built-in caching, task orchestration, and code sharing patterns are optimized for large-scale, modular applications.
-- Compared to alternatives like Turborepo, Nx offers better support for custom builds, affected code analysis, and project isolation.
+#### Why We Chose Turborepo
+- **Simplicity and Flexibility:** Turborepo offers a lightweight, flexible approach that aligns well with JavaScript/TypeScript projects, especially those using React or React Native.
+- **Zero-config build pipelines:** You can define tasks (build, lint, test) per package using existing package.json scripts, and Turbo handles caching, parallel execution, and dependency ordering automatically.
+- **Remote Caching:** With Vercel’s remote caching, teams can share build artifacts across environments, drastically reducing CI/CD times.
+- **Tooling Agnostic:** Unlike Nx, Turborepo doesn’t impose opinionated plugins or CLI wrappers. You can use native tools like Metro, Jest, ESLint, and TypeScript directly.
+- **Ideal for custom React Native setups:** For teams using custom configurations or non-standard workflows, Turborepo avoids the complexity and learning curve that Nx sometimes introduces.
 
 #### What Are Workspaces
-- Nx workspaces are based on npm/yarn/pnpm workspace protocols.
-- Each package (like features/prescriptions, ui/, or apps/brandA-app) is defined in the root package.json under workspaces.
-- Nx maps the relationships between these workspaces and tracks how changes to one package affect others.
+- Turborepo relies on native workspace protocols from npm, yarn, or pnpm.
+- Each package (like features/prescriptions, ui/, or apps/docmorris) is listed as a workspace in the root-level package.json
+- Turborepo uses a turbo.json file to orchestrate tasks and manage caching across these workspaces.
 
 Each workspace (app or package) should have its own **package.json** to define:
 - Its name, dependencies, and scripts.
-- It enables Nx to treat it as an independent unit with its own tasks.
-
-For applications (apps/brandA-app, apps/brandB-app), we also include an **app.json** file to:
-- Define displayName and internal app name for build tools.
-- Support CodePush, deep linking, and branded build scripts.
-
-These files are required to enable:
-- Smooth workspace dependency resolution
-- Clear build artifact definitions
-- Isolated development and deployment of apps and features
-
-**`app.json`**
-```json
-{
-  "name": "brandA",
-  "displayName": "DocMorris Brand A"
-}
-```
+- This lets Turborepo treat it as a modular unit with independent lifecycle hooks.
 
 **`package.json`**
 ```json
 {
-  "name": "brandA-app",
+  "name": "docmorris",
   "version": "1.0.0",
   "scripts": {
     "start": "react-native start",
@@ -148,32 +134,76 @@ These files are required to enable:
 }
 ```
 
-### Setting Up an Nx Monorepo
+For applications (apps/docmorris, apps/brandb), we also include an **app.json** file to:
+- Define internal app name for build tools.
+- Support CodePush, deep linking, and branded build scripts.
 
-1. Initialize Nx with React Native plugin:
+These files are required to enable:
+- Smooth workspace dependency resolution
+- Clear build artifact definitions
+- Isolated development and deployment of apps and features
+
+
+### Setting Up a Turborepo Monorepo
+
+1. Scaffold Your Monorepo
+
+You can quickly generate a new Turborepo setup using the official starter template:
 ```ts
-npx create-nx-workspace@latest my-workspace --preset react-native
+npx create-turbo@latest
 ```
 
-2. Define your structure:
-- apps/: one folder per brand app (e.g., brandA-app, brandB-app)
-- packages/: shared code for UI, features, navigation, theme, etc.
-- libs/: utility libraries, constants, and other low-level helpers
+2. Update your root-level package.json to include all workspace paths:
+```json
+{
+  "name": "my-turbo-workspace",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "libs/*"
+  ],
+  "devDependencies": {
+    "turbo": "^1.10.0"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint"
+  }
+}
+```
   
 3. Configure workspaces in root package.json:
 ```ts
 "workspaces": ["apps/*", "packages/*/*", "packages/*", "libs/*"]
 ```
 
-4. Add Nx targets for testing, building, and linting.
-
-5. Use affected commands for efficient CI builds:
-```ts
-nx affected:test
-nx affected:build
+4. Add Your Apps and Packages
+- Create individual folders under apps/, packages/, and libs/:
+- Each should have a package.json with its name and dependencies.
+- Example structure:
 ```
+apps/
+  ├── docmorris/
+  └── brandb/
+packages/
+  ├── ui/
+  └── features/
+libs/
+  └── utils/
+```
+5. Run Your Tasks
 
-Nx helps scale development without sacrificing performance or maintainability.
+Use Turborepo to execute scripts across packages:
+
+```
+npm run dev
+npm run build
+npm run lint
+```
+Only affected packages will run, with task caching and parallel execution.
+
 
 ### Feature Scaffolding
 
@@ -192,7 +222,7 @@ packages/features/<feature-name>/
     services/       # Data fetchers, handlers, and domain logic
   __tests__/        # Unit & integration tests
   index.ts          # Public API entry
-  package.json      # Defines the feature as an Nx workspace
+  package.json      # Defines the feature as a workspace
 ```
 
 ## 🎨 Styling Strategy
@@ -233,84 +263,96 @@ We prioritize **component-level styling, rich theming, code clarity, and TypeScr
 
 ## ♻️ Component Reusability Strategy
 
-To support a scalable dual-brand architecture, the app includes a packages/ui module designed to house all shared UI components. These components are:
-- Stateless and configurable using props and theme tokens
-- Compatible with Styled-components theming for runtime brand switching
-- Structured for maximum reusability (e.g. generic Button, Card, Modal, TextField components)
-- Built following accessibility and performance best practices
-  
-Brand-specific customization (e.g. button colors or font weights) is handled through the theme package, using design tokens injected via context.
-This approach allows teams to:
-- Maintain a single source of truth for core components
-- Avoid code duplication across the two brand apps
-- Enable faster prototyping and consistent look & feel
+To support a scalable, multi-brand architecture, the app leverages a shared `@repo/ui` package that contains all core UI components. These components are brand-agnostic and derive their visual styling from theme tokens injected at runtime from the `@repo/theme` package.
 
-### Brand Customization
-The app dynamically injects brand-specific themes via a shared utility:
-```ts
-// packages/theme/brand.ts
-export const getBrandTheme = (brand: 'brandA' | 'brandB') => ({
-  colors: brand === 'brandA' ? brandAColors : brandBColors,
-  typography: commonTypography,
-  spacing: spacingScale,
-});
+
+### Design Principles
+
+All components in `@repo/ui` are:
+
+- **Stateless** and driven by props and theme values.
+- **Compatible with `styled-components/native`**, enabling runtime theming.
+- **Generic and composable**, such as `Button`, `Card`, `Modal`, or `TextField`.
+- Built following **accessibility** and **performance** best practices.
+
+This setup ensures:
+
+- A **single source of truth** for UI elements.
+- **No duplication** across brand implementations.
+- **Consistent design language** and faster iteration.
+  
+
+### Brand Customization via `@repo/theme`
+
+All brand-specific tokens (e.g. colors, fonts, spacing) are declared in the `@repo/theme` package, which also exposes the `BrandProvider` and `useBrand` hook for brand context access.
+
+Each app provides its own `brandConfig`, extending a shared base with runtime assets like logos, ads, and product images.
+
+```tsx
+// apps/docmorris/App.tsx
+import { BrandProvider } from '@repo/theme/context';
+import { brandConfig } from './brandConfig';
+
+export default function App() {
+  return (
+    <BrandProvider config={brandConfig}>
+      <TabsNavigator />
+    </BrandProvider>
+  );
+}
 ```
 
-### Theme Structure
-The app uses a modular theme design to centralize visual identity. Each theme includes:
+- `BrandProvider` injects the current brand's `theme` using `ThemeProvider`.
+- All `@repo/ui` components consume `theme` values directly—no need for brand-specific logic.
+
+
+### Theme Structure (from `@repo/theme`)
+
+Themes are strongly typed and organized around tokens:
+
 ```ts
-interface Theme {
+interface ThemeType {
   colors: {
-    primary: string;
-    secondary: string;
-    background: string;
-    text: string;
-    accent: string;
+    primary: { primary1: string; background: string; /* ... */ };
+    secondary: { secondary1: string; /* ... */ };
+    complementary: { success1: string; /* ... */ };
+    interferer: { interferer1: string };
   };
-  typography: {
-    headingFont: string;
-    bodyFont: string;
-    fontSizes: {
-      sm: number;
-      md: number;
-      lg: number;
-    };
-  };
-  spacing: {
-    xs: number;
-    sm: number;
-    md: number;
-    lg: number;
-    xl: number;
+  fonts: {
+    body: { 1: { regular: {...} } };
+    button: { medium: {...} };
+    // ...
   };
 }
 ```
 
-### Theme Injection
-Themes are injected globally using ThemeProvider from styled-components:
-```ts
-import { ThemeProvider } from 'styled-components/native';
-import { getBrandTheme } from '@theme/brand';
+Each brand exports its own variant (`docMorrisTheme`, `brandBTheme`) from `@repo/theme/themes`.
 
-const App = () => {
-  const brand = getCurrentBrand();
-  const theme = getBrandTheme(brand);
 
-  return (
-    <ThemeProvider theme={theme}>
-      <NavigationRoot />
-    </ThemeProvider>
-  );
-};
-```
-### Example of a Themed Component
-```ts 
+### Example: Themed Component from `@repo/ui`
+
+```tsx
 const StyledButton = styled.TouchableOpacity\`
-  background-color: \${({ theme }) => theme.colors.primary};
-  padding: \${({ theme }) => theme.spacing.md}px;
+  background-color: \${({ theme }) => theme.colors.primary.primary1};
+  padding: 12px;
   border-radius: 6px;
 \`;
 ```
+
+- No brand logic in `@repo/ui`.
+- Theme values are injected from the app through `BrandProvider`.
+
+
+### Summary
+
+| Layer         | Responsibility                                       |
+|---------------|------------------------------------------------------|
+| `@repo/theme` | Brand configs, theme tokens, context, `ThemeProvider` |
+| `@repo/ui`    | Generic, theme-aware components                      |
+| App           | Selects brand config and injects it at runtime       |
+
+This modular layering ensures that the UI is fully reusable while supporting unique branding per app instance. Let me know if you'd like to document best practices for adding new tokens or brands!
+
 
 ## 📲 Native Integrations
 
@@ -495,10 +537,10 @@ For JavaScript-only updates that don’t require app store approval.
 import { execSync } from 'child_process';
 
 const apps = [
-  { name: 'brandA', platform: 'ios', deployment: 'Staging' },
-  { name: 'brandA', platform: 'android', deployment: 'Staging' },
-  { name: 'brandB', platform: 'ios', deployment: 'Staging' },
-  { name: 'brandB', platform: 'android', deployment: 'Staging' },
+  { name: 'docmorris', platform: 'ios', deployment: 'Staging' },
+  { name: 'docmorris', platform: 'android', deployment: 'Staging' },
+  { name: 'brandb', platform: 'ios', deployment: 'Staging' },
+  { name: 'brandb', platform: 'android', deployment: 'Staging' },
 ];
 
 apps.forEach(app => {
