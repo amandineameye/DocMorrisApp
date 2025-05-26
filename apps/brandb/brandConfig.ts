@@ -1,16 +1,20 @@
 import {BrandConfig, brandBaseConfigs} from '@repo/theme/brandConfig';
-import Logo from './assets/logo/brandb.svg';
 
 export const brandConfig: BrandConfig = {
   ...brandBaseConfigs.brandb,
-  logo: Logo,
+  logo: require('./assets/logo/brandb.png'),
   ads: [
-    require('./assets/ads/test.png'),
-    // require('./assets/ads/ad2.png'),
-    // require('./assets/ads/ad3.png'),
-    // require('./assets/ads/ad4.png'),
-    // require('./assets/ads/ad5.png'),
-    // require('./assets/ads/ad6.png'),
-    // require('./assets/ads/ad7.png'),
+    require('./assets/ads/ad1.png'),
+    require('./assets/ads/ad2.png'),
+    require('./assets/ads/ad3.png'),
+    require('./assets/ads/ad4.png'),
+    require('./assets/ads/ad5.png'),
+    require('./assets/ads/ad6.png'),
+    require('./assets/ads/ad7.png'),
+  ],
+  products: [
+    require('./assets/products/med1.png'),
+    require('./assets/products/med2.png'),
+    require('./assets/products/med3.png'),
   ],
 };
