@@ -4,6 +4,7 @@ import { ThemeType } from '@repo/theme/themes/types';
 import { Image, View, TextStyle } from 'react-native';
 import { useBrand } from '@repo/theme/context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useProductStore } from '@repo/stores/products/store';
 
 type ProductCardProps = {
   productId: number;
@@ -37,14 +38,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   isFavorite: isFavoriteProp = false,
 }) => {
   const theme = useTheme() as ThemeType;
-  const { products } = useBrand();
-  const [isFavorite, setIsFavorite] = useState(isFavoriteProp);
+  const { productImgs } = useBrand();
 
-  const toggleFavorite = () => setIsFavorite((prev) => !prev);
+  const toggleFavorite = useProductStore((state) => state.toggleFavorite);
+  const isFavorite = useProductStore(
+    (state) => state.products.find((p) => p.id === productId)?.isFavorite ?? false,
+  );
 
   return (
     <CardContainer onPress={onPress} accessibilityRole="button">
-      <FavoriteButton onPress={toggleFavorite} accessibilityRole="button">
+      <FavoriteButton onPress={() => toggleFavorite(productId)} accessibilityRole="button">
         <Ionicons name={isFavorite ? 'heart' : 'heart-outline'} size={16} />
       </FavoriteButton>
 
@@ -52,7 +55,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         {/* Top Section */}
         <View>
           <StyledImageWrapper>
-            <StyledImage source={products[productId]?.image} />
+            <StyledImage source={productImgs[productId]?.image} />
           </StyledImageWrapper>
 
           <ProductName

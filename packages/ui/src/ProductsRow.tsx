@@ -3,7 +3,7 @@ import { ScrollView } from 'react-native';
 import styled from 'styled-components/native';
 import { ProductCard } from './ProductCard';
 import { ThemeType } from '@repo/theme/themes/types';
-import { Product } from '@repo/theme/brandConfig';
+import { Product } from '@repo/stores/products/types';
 import { useTheme } from 'styled-components/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useBrand } from '@repo/theme/context';

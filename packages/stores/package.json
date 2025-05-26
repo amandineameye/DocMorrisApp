@@ -1,11 +1,9 @@
 {
-  "name": "@repo/discovery",
+  "name": "@repo/stores",
   "version": "0.0.0",
   "private": true,
-   "exports": {
-    "./types": "./src/types.ts",
-    "./screens/*": "./src/screens/*.tsx",
-    "./components/*": "./src/components/*.tsx"
+  "exports": {
+    "./products/*": "./src/products/*.ts"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
@@ -25,7 +23,6 @@
   "dependencies": {
        "react": "19.0.0",
     "react-dom": "19.0.0",
-    "@repo/ui": "*",
-    "@repo/stores": "*"
+    "@repo/theme": "*"
   }
 }
