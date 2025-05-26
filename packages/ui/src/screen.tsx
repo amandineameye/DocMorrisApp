@@ -9,7 +9,9 @@ type ScreenProps = {
 const ScrollContainer = styled(ScrollView).attrs({
   contentContainerStyle: {
     flexGrow: 1,
-    padding: 20,
+    paddingTop: 0,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
   },
 })`
   flex: 1;

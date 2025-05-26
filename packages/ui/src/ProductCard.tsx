@@ -48,7 +48,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <CardContainer onPress={onPress} accessibilityRole="button">
       <FavoriteButton onPress={() => toggleFavorite(productId)} accessibilityRole="button">
-        <Ionicons name={isFavorite ? 'heart' : 'heart-outline'} size={16} />
+        <Ionicons
+          name={isFavorite ? 'heart' : 'heart-outline'}
+          size={16}
+          color={theme.colors.secondary.secondary1}
+        />
       </FavoriteButton>
 
       <ContentWrapper>
