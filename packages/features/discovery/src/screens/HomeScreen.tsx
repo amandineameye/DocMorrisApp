@@ -1,5 +1,5 @@
-import { Screen } from '@repo/ui/screen';
-import { SearchBar } from '@repo/ui/searchBar';
+import { Screen } from '@repo/ui/Screen';
+import { SearchBar } from '@repo/ui/SearchBar';
 import { useBrand } from '@repo/theme/context';
 import { ProductsRow } from '@repo/ui/ProductsRow';
 

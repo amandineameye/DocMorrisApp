@@ -6,6 +6,7 @@ import { ThemeType } from '@repo/theme/themes/types';
 import { Product } from '@repo/theme/brandConfig';
 import { useTheme } from 'styled-components/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useBrand } from '@repo/theme/context';
 
 export type ProductsRowProps = {
   title: string;
@@ -14,6 +15,7 @@ export type ProductsRowProps = {
 
 export const ProductsRow = ({ title, products }: ProductsRowProps) => {
   const theme = useTheme() as ThemeType;
+
   return (
     <Section>
       <RowHeader>
