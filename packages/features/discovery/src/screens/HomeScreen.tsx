@@ -4,6 +4,7 @@ import { useBrand } from '@repo/theme/context';
 import { ProductsRow } from '@repo/ui/ProductsRow';
 import { useProductStore } from '@repo/stores/products/store';
 import { Header } from '@repo/ui/Header';
+import { RedeemButton } from '@repo/ui/Button';
 
 export const HomeScreen = () => {
   const products = useProductStore((state) => state.products);
@@ -12,6 +13,7 @@ export const HomeScreen = () => {
     <Screen>
       <Header />
       <SearchBar />
+      <RedeemButton />
       <ProductsRow title="Best sellers" products={products.slice(0, 3)} />
       <ProductsRow title="Offers" products={products.slice(0, 3)} />
       <ProductsRow title="Private Label" products={products.slice(0, 3)} />

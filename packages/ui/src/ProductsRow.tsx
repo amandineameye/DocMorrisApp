@@ -67,7 +67,7 @@ const RowHeader = styled.View`
   padding: 0 12px;
 `;
 
-const RowTitle = styled.Text<{ theme?: ThemeType }>`
+export const RowTitle = styled.Text<{ theme?: ThemeType }>`
   font-size: 18px;
   font-weight: 600;
   font-family: 'Poppins';
