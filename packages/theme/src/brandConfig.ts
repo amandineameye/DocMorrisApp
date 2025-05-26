@@ -6,7 +6,7 @@ export type BrandId = 'docmorris' | 'brandb';
 
 export interface BrandConfig {
   name: string;
-  logo: React.FC<SvgProps>; // handled by each app
+  logo: any; // handled by each app
   ads: any[]; // handled by each app
   theme: typeof docMorrisTheme;
   productImgs: { id: number; image: any }[];
