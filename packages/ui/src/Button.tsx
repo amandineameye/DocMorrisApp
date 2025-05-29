@@ -3,6 +3,7 @@ import styled, { useTheme } from 'styled-components/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { PressableStateCallbackType } from 'react-native';
+import { ThemeType } from '@repo/theme/themes/types';
 
 export const RedeemButton: React.FC = () => {
   const navigation = useNavigation();
@@ -34,7 +35,7 @@ const Wrapper = styled.View`
   margin-top: 20px;
 `;
 
-const ButtonContainer = styled.Pressable`
+const ButtonContainer = styled.Pressable<{ theme: ThemeType }>`
   flex-direction: row;
   align-items: center;
   justify-content: center;

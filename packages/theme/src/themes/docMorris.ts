@@ -1,6 +1,6 @@
-import { DefaultTheme } from 'styled-components/native';
+import { ThemeType } from '@repo/theme/themes/types';
 
-export const docMorrisTheme: DefaultTheme = {
+export const docMorrisTheme: ThemeType = {
   colors: {
     primary: {
       primary1: '#00463D',

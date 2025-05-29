@@ -22,7 +22,7 @@
     "@types/styled-components-react-native": "5.2.5"
   },
   "peerDependencies": {
-    "react": "19.1.0",
+    "react": "19.0.0",
     "@repo/ui": "*",
     "@repo/stores": "*",
     "styled-components": "5.2.1"

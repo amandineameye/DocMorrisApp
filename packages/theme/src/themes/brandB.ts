@@ -1,6 +1,6 @@
-import { DefaultTheme } from 'styled-components/native';
+import { ThemeType } from '@repo/theme/themes/types';
 
-export const brandBTheme: DefaultTheme = {
+export const brandBTheme: ThemeType = {
   colors: {
     primary: {
       primary1: '#002F6C',

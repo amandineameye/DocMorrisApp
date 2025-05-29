@@ -4,6 +4,7 @@ import { ProductCard } from './ProductCard';
 import { Product } from '@repo/stores/products/types';
 import { useTheme } from 'styled-components/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { ThemeType } from '@repo/theme/themes/types';
 
 export type ProductsRowProps = {
   title: string;
@@ -11,7 +12,7 @@ export type ProductsRowProps = {
 };
 
 export const ProductsRow = ({ title, products }: ProductsRowProps) => {
-  const theme = useTheme();
+  const theme = useTheme() as ThemeType;
 
   return (
     <Section>
@@ -64,7 +65,7 @@ const RowHeader = styled.View`
   padding: 0 12px;
 `;
 
-export const RowTitle = styled.Text`
+export const RowTitle = styled.Text<{ theme: ThemeType }>`
   font-size: 18px;
   font-weight: 600;
   font-family: 'Poppins';
