@@ -13,15 +13,7 @@ import { AccountScreen } from '@repo/user-account/screens/AccountScreen'
 
 import { ThemeType } from '@repo/theme/themes/types'
 
-const Tab = createBottomTabNavigator({
-  screens: {
-    Home: HomeScreen,
-    Categories: CategoriesScreen,
-    Prescriptions: PrescriptionsScreen,
-    Cart: CartScreen,
-    Account: AccountScreen,
-  },
-})
+const Tab = createBottomTabNavigator()
 
 export type TabParamList = StaticParamList<typeof Tab>
 

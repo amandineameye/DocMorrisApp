@@ -7,6 +7,8 @@ import { brandConfig } from './brandConfig'
 enableScreens()
 
 export default function App() {
+  console.log('TabsNavigator:', TabsNavigator)
+  console.log('typeof TabsNavigator:', typeof TabsNavigator)
   return (
     <SafeAreaProvider>
       <BrandProvider config={brandConfig}>

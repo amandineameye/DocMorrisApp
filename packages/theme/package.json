@@ -20,9 +20,11 @@
     "typescript": "5.8.2",
     "@types/react": "19.1.6",
     "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*"
+    "@repo/typescript-config": "*",
+    "@types/styled-components-react-native": "5.2.5"
   },
   "peerDependencies": {
-    "react": "19.0.0"
+    "react": "19.0.0",
+    "styled-components": "6.1.8"
   }
 }
