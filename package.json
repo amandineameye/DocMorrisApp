@@ -9,18 +9,21 @@
     "check-types": "turbo run check-types",
     "clean:ios": "rm -rf apps/**/ios/Podfile.lock apps/**/ios/build apps/**/ios/Pods",
     "clean:modules": "rm -rf node_modules packages/**/node_modules apps/**/node_modules",
-    "clean:all": "npm run clean:modules && npm run clean:ios"
+    "clean:all": "npm run clean:modules && npm run clean:ios",
+    "postinstall": "patch-package"
   },
   "devDependencies": {
-    "metro-react-native-babel-preset": "0.77.0",
-    "prettier": "3.5.3",
-    "turbo": "2.5.3",
-    "typescript": "5.8.2",
-    "eslint": "9.27.0",
+    "@repo/prettier-config": "*",
     "@types/react": "19.1.6",
     "@types/react-native-vector-icons": "6.4.18",
     "@types/styled-components-react-native": "5.2.5",
-       "@repo/prettier-config": "*"
+    "eslint": "9.27.0",
+    "metro-react-native-babel-preset": "0.77.0",
+    "patch-package": "^8.0.0",
+    "postinstall-postinstall": "^2.1.0",
+    "prettier": "3.5.3",
+    "turbo": "2.5.3",
+    "typescript": "5.8.2"
   },
   "overrides": {
     "@babel/runtime": "7.27.1",
