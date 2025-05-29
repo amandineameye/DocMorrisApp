@@ -1,11 +1,10 @@
 import React from 'react';
 import styled, { useTheme } from 'styled-components/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { ThemeType } from '@repo/theme/themes/types';
 import { useNavigation } from '@react-navigation/native';
+import { PressableStateCallbackType } from 'react-native';
 
 export const RedeemButton: React.FC = () => {
-  const theme = useTheme() as ThemeType;
   const navigation = useNavigation();
 
   const handlePress = () => {
@@ -16,7 +15,7 @@ export const RedeemButton: React.FC = () => {
     <Wrapper>
       <ButtonContainer
         onPress={handlePress}
-        style={({ pressed }) => [
+        style={({ pressed }: PressableStateCallbackType) => [
           {
             opacity: pressed ? 0.9 : 1,
             transform: [{ scale: pressed ? 0.98 : 1 }],
@@ -35,7 +34,7 @@ const Wrapper = styled.View`
   margin-top: 20px;
 `;
 
-const ButtonContainer = styled.Pressable<{ theme: ThemeType }>`
+const ButtonContainer = styled.Pressable`
   flex-direction: row;
   align-items: center;
   justify-content: center;
@@ -44,7 +43,7 @@ const ButtonContainer = styled.Pressable<{ theme: ThemeType }>`
   border-radius: 12px;
 `;
 
-const ButtonText = styled.Text<{ theme: ThemeType }>`
+const ButtonText = styled.Text`
   color: white;
   font-size: 16px;
   font-weight: 600;

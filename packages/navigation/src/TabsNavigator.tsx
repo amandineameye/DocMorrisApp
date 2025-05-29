@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { useTheme } from 'styled-components/native';
-import { ThemeType } from '@repo/theme/themes/types';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import type { StaticParamList } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -25,7 +24,7 @@ const Tab = createBottomTabNavigator({
 export type TabParamList = StaticParamList<typeof Tab>;
 
 export const TabsNavigator = () => {
-  const theme = useTheme() as ThemeType;
+  const theme = useTheme();
 
   const navTheme = {
     ...DefaultTheme,

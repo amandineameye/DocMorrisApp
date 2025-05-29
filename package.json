@@ -6,22 +6,32 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
-  },
-  "dependencies": {
-    "@babel/runtime": "7.27.1",
-    "@types/react-native-vector-icons": "^6.4.18",
-    "react": "19.0.0",
-    "react-native": "0.79.2",
-    "react-native-vector-icons": "^9.2.0",
-    "styled-components": "6.1.18",
-    "zustand": "^5.0.5"
+    "check-types": "turbo run check-types",
+    "clean:ios": "rm -rf apps/**/ios/Podfile.lock apps/**/ios/build apps/**/ios/Pods",
+    "clean:modules": "rm -rf node_modules packages/**/node_modules apps/**/node_modules",
+    "clean:all": "npm run clean:modules && npm run clean:ios"
   },
   "devDependencies": {
     "metro-react-native-babel-preset": "0.77.0",
     "prettier": "3.5.3",
     "turbo": "2.5.3",
-    "typescript": "5.8.2"
+    "typescript": "5.8.2",
+    "eslint": "9.27.0",
+    "@types/react": "19.1.6",
+    "@types/react-native-vector-icons": "6.4.18",
+    "@types/styled-components-react-native": "5.2.5"
+  },
+  "overrides": {
+    "@babel/runtime": "7.27.1",
+    "i": "0.3.7",
+    "npm": "11.4.1",
+    "react": "19.1.0",
+    "react-native": "0.79.2",
+    "react-native-vector-icons": "9.2.0",
+    "styled-components": "5.2.1",
+    "zustand": "5.0.5",
+    "@react-navigation/bottom-tabs": "7.3.13",
+    "@react-navigation/native": "7.1.9"
   },
   "engines": {
     "node": ">=18"

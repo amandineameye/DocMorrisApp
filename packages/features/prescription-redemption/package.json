@@ -1,8 +1,8 @@
 {
   "name": "@repo/prescription-redemption",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
-   "exports": {
+  "exports": {
     "./types": "./src/types.ts",
     "./screens/*": "./src/screens/*.tsx",
     "./components/*": "./src/components/*.tsx"
@@ -13,18 +13,18 @@
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {
+    "@turbo/gen": "2.5.0",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
-    "@turbo/gen": "2.5.0",
     "@types/node": "22.15.3",
-    "@types/react": "19.0.0",
-    "@types/react-dom": "19.0.0",
-    "eslint": "9.27.0",
-    "typescript": "5.8.2"
+    "@types/react": "19.1.6",
+    "typescript": "5.8.2",
+    "@types/styled-components-react-native": "5.2.5"
   },
-  "dependencies": {
-       "react": "19.0.0",
-    "react-dom": "19.0.0",
-    "@repo/ui": "*"
+  "peerDependencies": {
+    "react": "19.1.0",
+    "@repo/ui": "*",
+    "@repo/stores": "*",
+    "styled-components": "5.2.1"
   }
 }

@@ -1,28 +1,27 @@
 {
   "name": "@repo/stores",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "exports": {
     "./products/*": "./src/products/*.ts"
   },
   "scripts": {
+     "dev": "tsc --watch",
+    "build": "tsc",
     "lint": "eslint . --max-warnings 0",
     "generate:component": "turbo gen react-component",
     "check-types": "tsc --noEmit"
   },
-  "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
+  "devDependencies": { 
     "@turbo/gen": "2.5.0",
     "@types/node": "22.15.3",
-    "@types/react": "19.0.0",
-    "@types/react-dom": "19.0.0",
-    "eslint": "9.27.0",
-    "typescript": "5.8.2"
+    "typescript": "5.8.2",
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "@types/react": "19.1.6"
   },
-  "dependencies": {
-       "react": "19.0.0",
-    "react-dom": "19.0.0",
-    "@repo/theme": "*"
-  }
+  "peerDependencies": {
+  "react": "19.1.0",
+  "@repo/theme": "*"
+}
 }

@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect, forwardRef } from 'react';
 import { TextInput, TextInputProps, Keyboard, TouchableOpacity, Animated } from 'react-native';
 import styled from 'styled-components/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { ThemeType } from '@repo/theme/themes/types';
 import { useTheme } from 'styled-components/native';
 
 type SearchBarProps = {
@@ -17,7 +16,7 @@ const Wrapper = styled.View`
   position: relative;
 `;
 
-const ArrowContainer = styled.View<{ isClickable: boolean }>`
+const ArrowContainer = styled.View`
   align-items: center;
   justify-content: center;
   position: absolute;
@@ -26,7 +25,7 @@ const ArrowContainer = styled.View<{ isClickable: boolean }>`
   ${({ isClickable }) => (isClickable ? '' : 'pointer-events: none;')}
 `;
 
-const Container = styled(Animated.View)<{ theme: ThemeType }>`
+const Container = styled(Animated.View)`
   flex-direction: row;
   align-items: center;
   background-color: ${({ theme }) => theme.colors.secondary.secondary6};
@@ -37,7 +36,7 @@ const Container = styled(Animated.View)<{ theme: ThemeType }>`
 `;
 
 // Base styled wrapper
-const InputBase = styled(TextInput)<{ theme: ThemeType }>`
+const InputBase = styled(TextInput)`
   flex: 1;
   font-size: 16px;
   color: ${({ theme }) => theme.colors.secondary.secondary1};
@@ -54,7 +53,7 @@ export const SearchBar = ({ value, onChangeText, ...props }: SearchBarProps) => 
   const inputRef = useRef<TextInput>(null);
   const [isFocused, setIsFocused] = useState(false);
   const marginLeft = useRef(new Animated.Value(0)).current;
-  const theme = useTheme() as ThemeType;
+  const theme = useTheme();
 
   const handleDismiss = () => {
     Keyboard.dismiss();

@@ -9,20 +9,19 @@
   "scripts": {
     "dev": "tsc --watch",
     "build": "tsc",
+    "lint": "eslint . --max-warnings 0",
+    "generate:component": "turbo gen react-component",
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
     "@turbo/gen": "2.5.0",
-    "eslint": "9.27.0",
-    "typescript": "5.8.2"
-  },
-  "dependencies": {
-    "@react-navigation/bottom-tabs": "^7.3.13",
-    "@react-navigation/native": "^7.1.9"
+    "typescript": "5.8.2",
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*"
   },
   "peerDependencies": {
-  "react-native-vector-icons": "^9.2.0"
-}
+    "react-native-vector-icons": "9.2.0",
+    "@react-navigation/bottom-tabs": "7.3.13",
+    "@react-navigation/native": "7.1.9"
+  }
 }
