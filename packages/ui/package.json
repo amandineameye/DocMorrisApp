@@ -24,6 +24,10 @@
   "peerDependencies": {
     "react": "19.0.0",
     "@repo/theme": "*",
-    "styled-components": "6.1.8"
+    "styled-components": "6.1.8",
+    "react-native": "0.79.2",
+    "react-native-vector-icons": "9.2.0",
+    "@repo/stores": "*",
+    "@react-navigation/native": "7.1.9"
   }
 }
