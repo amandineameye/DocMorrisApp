@@ -1,13 +1,14 @@
-import { Screen } from "@repo/ui/Screen";
-import { SearchBar } from "@repo/ui/SearchBar";
-import { useBrand } from "@repo/theme/context";
-import { ProductsRow } from "@repo/ui/ProductsRow";
-import { useProductStore } from "@repo/stores/products/store";
-import { Header } from "@repo/ui/Header";
-import { RedeemButton } from "@repo/ui/Button";
+import { Screen } from '@repo/ui/Screen'
+import { SearchBar } from '@repo/ui/SearchBar'
+import { useBrand } from '@repo/theme/context'
+import { ProductsRow } from '@repo/ui/ProductsRow'
+import { useProductStore } from '@repo/stores/products/store'
+import { Header } from '@repo/ui/Header'
+import { RedeemButton } from '@repo/ui/Button'
+import { Text } from 'react-native'
 
 export const HomeScreen = () => {
-  const products = useProductStore((state) => state.products);
+  const products = useProductStore((state) => state.products)
 
   return (
     <Screen>
@@ -18,5 +19,5 @@ export const HomeScreen = () => {
       <ProductsRow title="Offers" products={products.slice(0, 3)} />
       <ProductsRow title="Private Label" products={products.slice(0, 3)} />
     </Screen>
-  );
-};
+  )
+}

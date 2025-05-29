@@ -32,7 +32,7 @@ export const docMorrisTheme: ThemeType = {
   fonts: {
     button: {
       medium: {
-        fontFamily: 'Poppins',
+        fontFamily: 'Poppins-Medium',
         fontSize: 14,
         lineHeight: 22,
         fontWeight: '500',
@@ -48,13 +48,13 @@ export const docMorrisTheme: ThemeType = {
     caption: {
       '1': {
         regular: {
-          fontFamily: 'Poppins',
+          fontFamily: 'Poppins-Regular',
           fontSize: 12,
           lineHeight: 18,
           fontWeight: '400',
         },
         medium: {
-          fontFamily: 'Poppins',
+          fontFamily: 'Poppins-Medium',
           fontSize: 12,
           lineHeight: 18,
           fontWeight: '500',
@@ -69,13 +69,13 @@ export const docMorrisTheme: ThemeType = {
       },
       '2': {
         regular: {
-          fontFamily: 'Poppins',
+          fontFamily: 'Poppins-Regular',
           fontSize: 10,
           lineHeight: 15,
           fontWeight: '400',
         },
         medium: {
-          fontFamily: 'Poppins',
+          fontFamily: 'Poppins-Medium',
           fontSize: 10,
           lineHeight: 15,
           fontWeight: '500',
@@ -83,7 +83,7 @@ export const docMorrisTheme: ThemeType = {
       },
       '4': {
         medium: {
-          fontFamily: 'Poppins',
+          fontFamily: 'Poppins-Medium',
           fontSize: 6,
           lineHeight: 9,
           fontWeight: '500',
@@ -93,13 +93,13 @@ export const docMorrisTheme: ThemeType = {
     body: {
       '1': {
         regular: {
-          fontFamily: 'Poppins',
+          fontFamily: 'Poppins-Regular',
           fontSize: 16,
           lineHeight: 24,
           fontWeight: '400',
         },
         semiBold: {
-          fontFamily: 'Poppins',
+          fontFamily: 'Poppins-SemiBold',
           fontSize: 16,
           lineHeight: 24,
           fontWeight: '600',
@@ -107,7 +107,7 @@ export const docMorrisTheme: ThemeType = {
       },
       '2': {
         medium: {
-          fontFamily: 'Poppins',
+          fontFamily: 'Poppins-Medium',
           fontSize: 14,
           lineHeight: 21,
           fontWeight: '500',
@@ -115,13 +115,13 @@ export const docMorrisTheme: ThemeType = {
       },
       '3': {
         regular: {
-          fontFamily: 'Poppins',
+          fontFamily: 'Poppins-Regular',
           fontSize: 13,
           lineHeight: 24,
           fontWeight: '400',
         },
         medium: {
-          fontFamily: 'Poppins',
+          fontFamily: 'Poppins-Medium',
           fontSize: 13,
           lineHeight: 24,
           fontWeight: '500',
@@ -132,7 +132,7 @@ export const docMorrisTheme: ThemeType = {
     title: {
       '1': {
         semiBold: {
-          fontFamily: 'Poppins',
+          fontFamily: 'Poppins-SemiBold',
           fontSize: 28,
           lineHeight: 34,
           fontWeight: '600',
@@ -140,7 +140,7 @@ export const docMorrisTheme: ThemeType = {
       },
       '2': {
         semiBold: {
-          fontFamily: 'Poppins',
+          fontFamily: 'Poppins-SemiBold',
           fontSize: 18,
           lineHeight: 27,
           fontWeight: '600',
@@ -148,7 +148,7 @@ export const docMorrisTheme: ThemeType = {
       },
       '3': {
         semiBold: {
-          fontFamily: 'Poppins',
+          fontFamily: 'Poppins-SemiBold',
           fontSize: 16,
           lineHeight: 24,
           fontWeight: '600',
@@ -167,7 +167,7 @@ export const docMorrisTheme: ThemeType = {
     input: {
       text: {
         regular: {
-          fontFamily: 'Poppins',
+          fontFamily: 'Poppins-Regular',
           fontSize: 18,
           lineHeight: undefined,
           fontWeight: '400',
@@ -175,7 +175,7 @@ export const docMorrisTheme: ThemeType = {
       },
       helperText: {
         regular: {
-          fontFamily: 'Poppins',
+          fontFamily: 'Poppins-Regular',
           fontSize: 12,
           lineHeight: 18,
           fontWeight: '400',
@@ -183,7 +183,7 @@ export const docMorrisTheme: ThemeType = {
       },
       label: {
         regular: {
-          fontFamily: 'Poppins',
+          fontFamily: 'Poppins-Regular',
           fontSize: 10,
           lineHeight: undefined,
           fontWeight: '400',

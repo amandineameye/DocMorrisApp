@@ -57,5 +57,8 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "react-native": {
+    "assets": ["./assets/fonts"]
   }
 }

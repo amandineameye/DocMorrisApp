@@ -51,6 +51,10 @@
 	<key>UIAppFonts</key>
 	<array>
 	<string>Ionicons.ttf</string>
+	<string>poppins.regular.ttf</string>
+  	<string>poppins.medium.ttf</string>
+ 	<string>poppins.semibold.ttf</string>
+  	<string>poppins.bold.ttf</string>
 	</array>
 </dict>
 </plist>

@@ -38,7 +38,7 @@ const Logo = styled.Image<{ theme: ThemeType }>`
 const TextBlock = styled.View``
 
 const WelcomeText = styled.Text<{ theme: ThemeType }>`
-  color: ${({ theme }) => theme.colors.secondary.secondary3};
+  color: ${({ theme }) => theme.colors.secondary.secondary1};
   font-family: ${({ theme }) => theme.fonts.caption['1'].regular.fontFamily};
   font-size: ${({ theme }) => theme.fonts.caption['1'].regular.fontSize}px;
   line-height: ${({ theme }) => theme.fonts.caption['1'].regular.lineHeight}px;

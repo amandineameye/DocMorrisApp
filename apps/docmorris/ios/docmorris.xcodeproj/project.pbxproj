@@ -12,6 +12,10 @@
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		9043D491E4ACA62639ED1FD1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
+		993A88182DE90D0E00E7C63E /* poppins.bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 993A88172DE90D0E00E7C63E /* poppins.bold.ttf */; };
+		993A881A2DE90D2A00E7C63E /* poppins.medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 993A88192DE90D2A00E7C63E /* poppins.medium.ttf */; };
+		993A881C2DE90D4100E7C63E /* poppins.regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 993A881B2DE90D4100E7C63E /* poppins.regular.ttf */; };
+		993A881E2DE90D5600E7C63E /* poppins.semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 993A881D2DE90D5600E7C63E /* poppins.semibold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,10 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-docmorris.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-docmorris.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = docmorris/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = docmorris/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		993A88172DE90D0E00E7C63E /* poppins.bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = poppins.bold.ttf; sourceTree = "<group>"; };
+		993A88192DE90D2A00E7C63E /* poppins.medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = poppins.medium.ttf; sourceTree = "<group>"; };
+		993A881B2DE90D4100E7C63E /* poppins.regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = poppins.regular.ttf; sourceTree = "<group>"; };
+		993A881D2DE90D5600E7C63E /* poppins.semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = poppins.semibold.ttf; sourceTree = "<group>"; };
 		9991C5ED2DE28D96007F745E /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -94,6 +102,10 @@
 		9991C5EE2DE28D96007F745E /* fonts */ = {
 			isa = PBXGroup;
 			children = (
+				993A881D2DE90D5600E7C63E /* poppins.semibold.ttf */,
+				993A881B2DE90D4100E7C63E /* poppins.regular.ttf */,
+				993A88192DE90D2A00E7C63E /* poppins.medium.ttf */,
+				993A88172DE90D0E00E7C63E /* poppins.bold.ttf */,
 				9991C5ED2DE28D96007F745E /* Ionicons.ttf */,
 			);
 			path = fonts;
@@ -168,8 +180,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				993A881E2DE90D5600E7C63E /* poppins.semibold.ttf in Resources */,
+				993A88182DE90D0E00E7C63E /* poppins.bold.ttf in Resources */,
+				993A881A2DE90D2A00E7C63E /* poppins.medium.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				993A881C2DE90D4100E7C63E /* poppins.regular.ttf in Resources */,
 				9043D491E4ACA62639ED1FD1 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -201,9 +217,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-docmorris/Pods-docmorris-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-docmorris/Pods-docmorris-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -240,9 +260,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-docmorris/Pods-docmorris-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-docmorris/Pods-docmorris-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -386,10 +410,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -458,10 +479,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
