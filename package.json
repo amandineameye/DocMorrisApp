@@ -19,8 +19,8 @@
     "@types/styled-components-react-native": "5.2.5",
     "eslint": "9.27.0",
     "metro-react-native-babel-preset": "0.77.0",
-    "patch-package": "^8.0.0",
-    "postinstall-postinstall": "^2.1.0",
+    "patch-package": "8.0.0",
+    "postinstall-postinstall": "2.1.0",
     "prettier": "3.5.3",
     "turbo": "2.5.3",
     "typescript": "5.8.2"
