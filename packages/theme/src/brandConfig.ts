@@ -1,8 +1,8 @@
-import { SvgProps } from 'react-native-svg';
-import { docMorrisTheme } from './themes/docMorris';
-import { brandBTheme } from './themes/brandB';
+import { SvgProps } from "react-native-svg";
+import { docMorrisTheme } from "./themes/docMorris";
+import { brandBTheme } from "./themes/brandB";
 
-export type BrandId = 'docmorris' | 'brandb';
+export type BrandId = "docmorris" | "brandb";
 
 export interface BrandConfig {
   name: string;
@@ -14,14 +14,14 @@ export interface BrandConfig {
 
 export const brandBaseConfigs: Record<
   BrandId,
-  Omit<BrandConfig, 'ads' | 'logo' | 'productImgs'>
+  Omit<BrandConfig, "ads" | "logo" | "productImgs">
 > = {
   docmorris: {
-    name: 'DocMorris',
+    name: "DocMorris",
     theme: docMorrisTheme,
   },
   brandb: {
-    name: 'BrandB',
+    name: "BrandB",
     theme: brandBTheme,
   },
 };

@@ -1,10 +1,10 @@
-import React from 'react';
-import { TabsNavigator } from '@repo/navigation/TabsNavigator';
-import { enableScreens } from 'react-native-screens';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { BrandProvider } from '@repo/theme/context';
-import { brandConfig } from './brandConfig';
-enableScreens();
+import React from 'react'
+import { TabsNavigator } from '@repo/navigation/TabsNavigator'
+import { enableScreens } from 'react-native-screens'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { BrandProvider } from '@repo/theme/context'
+import { brandConfig } from './brandConfig'
+enableScreens()
 
 export default function App() {
   return (
@@ -13,5 +13,5 @@ export default function App() {
         <TabsNavigator />
       </BrandProvider>
     </SafeAreaProvider>
-  );
+  )
 }

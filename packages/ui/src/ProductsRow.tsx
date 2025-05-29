@@ -1,18 +1,18 @@
-import { ScrollView } from 'react-native';
-import styled from 'styled-components/native';
-import { ProductCard } from './ProductCard';
-import { Product } from '@repo/stores/products/types';
-import { useTheme } from 'styled-components/native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { ThemeType } from '@repo/theme/themes/types';
+import { ScrollView } from 'react-native'
+import styled from 'styled-components/native'
+import { ProductCard } from './ProductCard'
+import { Product } from '@repo/stores/products/types'
+import { useTheme } from 'styled-components/native'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { ThemeType } from '@repo/theme/themes/types'
 
 export type ProductsRowProps = {
-  title: string;
-  products: Product[];
-};
+  title: string
+  products: Product[]
+}
 
 export const ProductsRow = ({ title, products }: ProductsRowProps) => {
-  const theme = useTheme() as ThemeType;
+  const theme = useTheme() as ThemeType
 
   return (
     <Section>
@@ -49,31 +49,31 @@ export const ProductsRow = ({ title, products }: ProductsRowProps) => {
         </Products>
       </ScrollView>
     </Section>
-  );
-};
+  )
+}
 
 // Styled Components
 const Section = styled.View`
   margin-top: 20px;
   height: 350px;
-`;
+`
 
 const RowHeader = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 0 12px;
-`;
+`
 
 export const RowTitle = styled.Text<{ theme: ThemeType }>`
   font-size: 18px;
   font-weight: 600;
   font-family: 'Poppins';
   color: ${({ theme }) => theme?.colors.secondary.secondary1};
-`;
+`
 
 const Products = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-`;
+`

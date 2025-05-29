@@ -1,11 +1,11 @@
-import React from 'react';
-import styled from 'styled-components/native';
-import { useBrand } from '@repo/theme/context'; // adjust import path as needed
-import { Image } from 'react-native';
-import { ThemeType } from '@repo/theme/themes/types';
+import React from 'react'
+import styled from 'styled-components/native'
+import { useBrand } from '@repo/theme/context' // adjust import path as needed
+import { Image } from 'react-native'
+import { ThemeType } from '@repo/theme/themes/types'
 
 export const Header: React.FC = () => {
-  const { name, logo } = useBrand();
+  const { name, logo } = useBrand()
 
   return (
     <Container>
@@ -18,8 +18,8 @@ export const Header: React.FC = () => {
         <BrandText>{name}</BrandText>
       </TextBlock>
     </Container>
-  );
-};
+  )
+}
 
 const Container = styled.View<{ theme: ThemeType }>`
   padding: 16px 0;
@@ -27,15 +27,15 @@ const Container = styled.View<{ theme: ThemeType }>`
 
   flex-direction: row;
   align-items: center;
-`;
+`
 
 const Logo = styled.Image<{ theme: ThemeType }>`
   width: 40px;
   height: 40px;
   margin-right: 12px;
-`;
+`
 
-const TextBlock = styled.View``;
+const TextBlock = styled.View``
 
 const WelcomeText = styled.Text<{ theme: ThemeType }>`
   color: ${({ theme }) => theme.colors.secondary.secondary3};
@@ -43,7 +43,7 @@ const WelcomeText = styled.Text<{ theme: ThemeType }>`
   font-size: ${({ theme }) => theme.fonts.caption['1'].regular.fontSize}px;
   line-height: ${({ theme }) => theme.fonts.caption['1'].regular.lineHeight}px;
   font-weight: ${({ theme }) => theme.fonts.caption['1'].regular.fontWeight};
-`;
+`
 
 const BrandText = styled.Text<{ theme: ThemeType }>`
   color: ${({ theme }) => theme.colors.secondary.secondary1};
@@ -51,4 +51,4 @@ const BrandText = styled.Text<{ theme: ThemeType }>`
   font-size: ${({ theme }) => theme.fonts.title['2'].semiBold.fontSize}px;
   line-height: ${({ theme }) => theme.fonts.title['2'].semiBold.lineHeight}px;
   font-weight: ${({ theme }) => theme.fonts.title['2'].semiBold.fontWeight};
-`;
+`

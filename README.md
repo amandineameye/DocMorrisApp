@@ -15,60 +15,73 @@ This document outlines the architectural and technical decisions for building a 
 ## 🧱 Technology Stack
 
 ### Programming Language
+
 - **TypeScript** — Strong typing, better IDE support, fewer runtime bugs
 
 ### Styling
+
 - **styled-components** - Scoped styles & dynamic theming. Enhanced with `babel-plugin-styled-components` for cleaner debugging and optimized builds
 
 ### State Management
-- **Zustand** — lightweight, boilerplate-free local state  
+
+- **Zustand** — lightweight, boilerplate-free local state
 - **React Query** — handles server state, caching, background updates
 
 ### Navigation
-- **React Navigation** — Native-stack, bottom-tabs, deep linking  
+
+- **React Navigation** — Native-stack, bottom-tabs, deep linking
 - **react-native-screens** — Improves memory usage and transition performance
 
 ### API Communication
-- **Axios** — HTTP client with interceptors and cancellation  
+
+- **Axios** — HTTP client with interceptors and cancellation
 - **React Query** — API caching, background sync, retry logic
 
 ### Local Storage
-- **react-native-mmkv** — Fast, encrypted key-value store  
+
+- **react-native-mmkv** — Fast, encrypted key-value store
 - **react-native-encrypted-storage** — OS-backed secure store for credentials & tokens
 
 ### Monorepo Tooling
+
 - **Turborepo** — Smart caching, incremental and parallel task execution, streamlined code sharing, zero-config monorepo orchestration
 
 ### Native Layer Libraries
-- **react-native-nfc-manager** — NFC for e-prescriptions  
-- **react-native-camera-kit** — QR code scanning  
-- **react-native-mmkv** — High-performance storage  
+
+- **react-native-nfc-manager** — NFC for e-prescriptions
+- **react-native-camera-kit** — QR code scanning
+- **react-native-mmkv** — High-performance storage
 - **react-native-encrypted-storage** — Secure native vault
 
 ### Testing
-- **Jest** — Unit & logic tests  
-- **React Native Testing Library** — Component testing  
+
+- **Jest** — Unit & logic tests
+- **React Native Testing Library** — Component testing
 - **Detox** — E2E testing on real devices/simulators
 
 ### Deployment Tooling
-- **CodePush** — OTA updates for JS bundles  
-- **Fastlane** — Build automation for App Store & Play Store  
+
+- **CodePush** — OTA updates for JS bundles
+- **Fastlane** — Build automation for App Store & Play Store
 - **Bitrise** — CI/CD orchestrator integrated with GitHub
 
 ### Automation
-- **GitHub Actions** — CI tasks: linting, unit tests, build checks  
+
+- **GitHub Actions** — CI tasks: linting, unit tests, build checks
 - **Bitrise** — Runs E2E tests, builds, and deploys apps to testers
 
 ### Monitoring & Feature Flags
-- **Sentry** — JS runtime error tracking  
-- **Firebase Crashlytics** — Native crash reporting  
-- **Datadog** — App performance observability  
-- **Firebase Analytics** — Behavior & funnel tracking  
+
+- **Sentry** — JS runtime error tracking
+- **Firebase Crashlytics** — Native crash reporting
+- **Datadog** — App performance observability
+- **Firebase Analytics** — Behavior & funnel tracking
 - **LaunchDarkly / Firebase Remote Config** — Feature flags, A/B testing, remote config
 
 ## 🏗️ Architecture
 
 ### Repository Structure
+
 ```bash
 apps/
   docmorris/
@@ -98,14 +111,17 @@ libs/
   detox/
   eslint/
 ```
+
 ### The Monorepo
 
 #### Why We Use a Monorepo
+
 - A monorepo allows all teams to collaborate in a single codebase with consistent tooling and shared components.
 - It promotes code reuse, avoids duplication, and simplifies cross-team communication and integration.
 - All features, apps, and libraries live in the same repository, reducing versioning conflicts and siloed development.
 
 #### Why We Chose Turborepo
+
 - **Simplicity and Flexibility:** Turborepo offers a lightweight, flexible approach that aligns well with JavaScript/TypeScript projects, especially those using React or React Native.
 - **Zero-config build pipelines:** You can define tasks (build, lint, test) per package using existing package.json scripts, and Turbo handles caching, parallel execution, and dependency ordering automatically.
 - **Remote Caching:** With Vercel’s remote caching, teams can share build artifacts across environments, drastically reducing CI/CD times.
@@ -113,15 +129,18 @@ libs/
 - **Ideal for custom React Native setups:** For teams using custom configurations or non-standard workflows, Turborepo avoids the complexity and learning curve that Nx sometimes introduces.
 
 #### What Are Workspaces
+
 - Turborepo relies on native workspace protocols from npm, yarn, or pnpm.
 - Each package (like features/prescriptions, ui/, or apps/docmorris) is listed as a workspace in the root-level package.json
 - Turborepo uses a turbo.json file to orchestrate tasks and manage caching across these workspaces.
 
 Each workspace (app or package) should have its own **package.json** to define:
+
 - Its name, dependencies, and scripts.
 - This lets Turborepo treat it as a modular unit with independent lifecycle hooks.
 
 **`package.json`**
+
 ```json
 {
   "name": "docmorris",
@@ -135,34 +154,33 @@ Each workspace (app or package) should have its own **package.json** to define:
 ```
 
 For applications (apps/docmorris, apps/brandb), we also include an **app.json** file to:
+
 - Define internal app name for build tools.
 - Support CodePush, deep linking, and branded build scripts.
 
 These files are required to enable:
+
 - Smooth workspace dependency resolution
 - Clear build artifact definitions
 - Isolated development and deployment of apps and features
-
 
 ### Setting Up a Turborepo Monorepo
 
 1. Scaffold Your Monorepo
 
 You can quickly generate a new Turborepo setup using the official starter template:
+
 ```ts
 npx create-turbo@latest
 ```
 
 2. Update your root-level package.json to include all workspace paths:
+
 ```json
 {
   "name": "my-turbo-workspace",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*",
-    "libs/*"
-  ],
+  "workspaces": ["apps/*", "packages/*", "libs/*"],
   "devDependencies": {
     "turbo": "^1.10.0"
   },
@@ -173,16 +191,19 @@ npx create-turbo@latest
   }
 }
 ```
-  
+
 3. Configure workspaces in root package.json:
+
 ```ts
 "workspaces": ["apps/*", "packages/*/*", "packages/*", "libs/*"]
 ```
 
 4. Add Your Apps and Packages
+
 - Create individual folders under apps/, packages/, and libs/:
 - Each should have a package.json with its name and dependencies.
 - Example structure:
+
 ```
 apps/
   ├── docmorris/
@@ -193,6 +214,7 @@ packages/
 libs/
   └── utils/
 ```
+
 5. Run Your Tasks
 
 Use Turborepo to execute scripts across packages:
@@ -202,8 +224,8 @@ npm run dev
 npm run build
 npm run lint
 ```
-Only affected packages will run, with task caching and parallel execution.
 
+Only affected packages will run, with task caching and parallel execution.
 
 ### Feature Scaffolding
 
@@ -230,20 +252,22 @@ packages/features/<feature-name>/
 We use **styled-components** in this React Native monorepo to ensure a scalable, brand-themable, and maintainable styling system.
 
 ### Why styled-components?
+
 - **Scoped styles, clean JSX**
-Styles are defined alongside component logic, but without cluttering the render code. This preserves both readability and separation of concerns.
+  Styles are defined alongside component logic, but without cluttering the render code. This preserves both readability and separation of concerns.
 - **Dynamic theming via ThemeProvider**
-Inject a full theme object contextually (e.g., per brand) and access it in all styled components with full type support.
+  Inject a full theme object contextually (e.g., per brand) and access it in all styled components with full type support.
 - **Flexible styling for all components**
-Supports styling any native or custom component — no need to adopt wrapper-specific primitives.
+  Supports styling any native or custom component — no need to adopt wrapper-specific primitives.
 - **Dynamic styling via props and logic**
-Write expressive, condition-based styles using regular JavaScript and component props.
+  Write expressive, condition-based styles using regular JavaScript and component props.
 - **Seamless TypeScript support**
   - IntelliSense for component props and theme values
   - Autocompletion for tokens and styles
   - Type-checked style definitions with helpful IDE feedback
 
 ### Why not NativeWind?
+
 - Clutters JSX with long Tailwind class strings
 - Violates separation of concerns by embedding style logic in markup
 - Poor visibility and readability when classes are conditional or deeply nested
@@ -252,6 +276,7 @@ Write expressive, condition-based styles using regular JavaScript and component 
 - Error-prone and harder to maintain in large codebases
 
 ### Why not Restyle?
+
 - Theming is only supported through Restyle's limited component set (<Box>, <Text>, etc.)
 - Lacks flexibility to style native or third-party components without extra wrappers
 - Less ergonomic in real-world component trees that mix custom and external components
@@ -264,7 +289,6 @@ We prioritize **component-level styling, rich theming, code clarity, and TypeScr
 ## ♻️ Component Reusability Strategy
 
 To support a scalable, multi-brand architecture, the app leverages a shared `@repo/ui` package that contains all core UI components. These components are brand-agnostic and derive their visual styling from theme tokens injected at runtime from the `@repo/theme` package.
-
 
 ### Design Principles
 
@@ -280,7 +304,6 @@ This setup ensures:
 - A **single source of truth** for UI elements.
 - **No duplication** across brand implementations.
 - **Consistent design language** and faster iteration.
-  
 
 ### Brand Customization via `@repo/theme`
 
@@ -290,8 +313,8 @@ Each app provides its own `brandConfig`, extending a shared base with runtime as
 
 ```tsx
 // apps/docmorris/App.tsx
-import { BrandProvider } from '@repo/theme/context';
-import { brandConfig } from './brandConfig';
+import { BrandProvider } from "@repo/theme/context";
+import { brandConfig } from "./brandConfig";
 
 export default function App() {
   return (
@@ -304,7 +327,6 @@ export default function App() {
 
 - `BrandProvider` injects the current brand's `theme` using `ThemeProvider`.
 - All `@repo/ui` components consume `theme` values directly—no need for brand-specific logic.
-
 
 ### Theme Structure (from `@repo/theme`)
 
@@ -328,7 +350,6 @@ interface ThemeType {
 
 Each brand exports its own variant (`docMorrisTheme`, `brandBTheme`) from `@repo/theme/themes`.
 
-
 ### Example: Themed Component from `@repo/ui`
 
 ```tsx
@@ -342,22 +363,22 @@ const StyledButton = styled.TouchableOpacity\`
 - No brand logic in `@repo/ui`.
 - Theme values are injected from the app through `BrandProvider`.
 
-
 ### Summary
 
-| Layer         | Responsibility                                       |
-|---------------|------------------------------------------------------|
+| Layer         | Responsibility                                        |
+| ------------- | ----------------------------------------------------- |
 | `@repo/theme` | Brand configs, theme tokens, context, `ThemeProvider` |
-| `@repo/ui`    | Generic, theme-aware components                      |
-| App           | Selects brand config and injects it at runtime       |
+| `@repo/ui`    | Generic, theme-aware components                       |
+| App           | Selects brand config and injects it at runtime        |
 
 This modular layering ensures that the UI is fully reusable while supporting unique branding per app instance. Let me know if you'd like to document best practices for adding new tokens or brands!
-
 
 ## 📲 Native Integrations
 
 ### Role of Native Layer
+
 The native layer plays a critical role in enabling hardware-dependent functionality, ensuring performance, and meeting regulatory demands for a secure pharmacy experience. This includes:
+
 - NFC support for reading electronic health cards (eGK), which is a requirement under the German healthcare system.
 - QR code scanning using the device camera for reading e-prescription barcodes.
 - Secure data storage using native encryption APIs or high-performance libraries like MMKV.
@@ -365,13 +386,14 @@ The native layer plays a critical role in enabling hardware-dependent functional
   - Deep linking (to support navigation via external URLs or notifications)
   - Push notifications (for order updates and reminders)
   - Access to the Secure Enclave / Keychain (for sensitive health data)
-These features are made available via native modules (e.g. react-native-nfc-manager, react-native-camera-kit, react-native-encrypted-storage) and are tightly integrated into the mobile workflows while respecting platform-specific requirements.
+    These features are made available via native modules (e.g. react-native-nfc-manager, react-native-camera-kit, react-native-encrypted-storage) and are tightly integrated into the mobile workflows while respecting platform-specific requirements.
 
 ### E-Prescriptions (eGK, QR)
 
 **Sample NFC Reader**
+
 ```ts
-import NfcManager, { NfcTech } from 'react-native-nfc-manager';
+import NfcManager, { NfcTech } from "react-native-nfc-manager";
 
 export async function readEGK() {
   await NfcManager.start();
@@ -384,7 +406,9 @@ export async function readEGK() {
   }
 }
 ```
+
 **Sample QR Code Scanner**
+
 ```ts
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
@@ -419,14 +443,17 @@ const styles = StyleSheet.create({
 ```
 
 ### Backend Data Flow
+
 When a QR or NFC-based e-prescription is redeemed, the following is transmitted securely to the backend:
+
 - Prescription token (Task ID) and access code (if any)
 - Medication information (drug name, dosage, quantity)
 - Patient and prescriber identifiers (pseudonymized or hashed)
 - Timestamp and submission source (QR vs NFC)
 - Verification status (e.g. signature validity)
-  
+
 Only what's needed is stored:
+
 - Task ID, metadata, and fulfillment status
 - Audit logs for legal compliance
 - Sensitive payloads are encrypted, never stored in plain text
@@ -493,38 +520,45 @@ This includes e-prescriptions, tokens, patient IDs, and any information protecte
 - Sensitive items are automatically purged on logout or app uninstall.
 - MMKV is used for fast access patterns (e.g., caching tokens for short periods), while encrypted storage is used for secure secrets.
 
-
 ## 🧪 Testing Strategy
 
 Our testing strategy reflects our focus on safety, quality, and speed across multiple teams and complex domains. It is designed to ensure:
+
 - Critical health-related logic is validated early.
 - UI and flows work reliably across brands.
 - Teams can refactor with confidence.
 
 ### Unit & Component Testing
+
 Each feature module includes unit tests for business logic and reusable UI components.
+
 - Jest is used to run fast, isolated tests for utilities, domain logic, and hooks.
 - React Native Testing Library allows us to test the actual rendered output and behavior of UI components, improving coverage for runtime interactions.
 
 Tests follow a colocated structure:
-- Business logic is placed in services/, hooks in hooks/, and each has its respective test files inside __tests__/ folders or colocated near the file.
+
+- Business logic is placed in services/, hooks in hooks/, and each has its respective test files inside **tests**/ folders or colocated near the file.
 - We aim for high coverage on medication logic, prescription workflows, and conditional UI states.
 
 ### E2E Testing
+
 - We use Detox for end-to-end flows — prescription redemption, QR scanning, authentication, and checkout.
 - Tests run on both iOS and Android simulators/emulators as part of our CI pipeline (Bitrise).
-E2E coverage ensures the full customer journey is reproducible, including platform-specific permissions like camera access and NFC handshakes.
+  E2E coverage ensures the full customer journey is reproducible, including platform-specific permissions like camera access and NFC handshakes.
 
 ## 🚀 Deployment Strategy
 
 ### Internal Testing Channels
+
 To support pre-release validation and iterative QA:
+
 - Firebase App Distribution (Android): Quick delivery to internal testers.
 - TestFlight (iOS): Seamless testing experience for Apple testers.
 - Play Store Internal Track: For staging Android releases before public rollout.
-  
+
 ### CI-Triggered Build Pipelines
-- Merges to develop or release/* trigger Bitrise workflows.
+
+- Merges to develop or release/\* trigger Bitrise workflows.
 - Workflows automatically:
   - Run tests
   - Build artifacts
@@ -532,7 +566,9 @@ To support pre-release validation and iterative QA:
 - Testers receive links with install instructions.
 
 ### CodePush Deployment Script
+
 For JavaScript-only updates that don’t require app store approval.
+
 ```ts
 import { execSync } from 'child_process';
 
@@ -579,6 +615,7 @@ Below is a high-level diagram describing the automation flow:
 ```
 
 This flow supports rapid development by ensuring:
+
 - **All commits are verified** with linting, tests, and type checks.
 - **Builds are automatically delivered** to internal testers with proper branding and configuration.
 - **Feedback is streamlined** via distribution platforms (Firebase, TestFlight).
@@ -586,6 +623,7 @@ This flow supports rapid development by ensuring:
 ### CI: GitHub Actions
 
 This is the first line of validation for any code pushed or merged:
+
 - Ensures code style via linting
 - Runs Jest tests to validate local logic
 - Builds the app to catch any compile or configuration errors early
@@ -607,7 +645,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18'
+          node-version: "18"
       - run: npm install
       - run: npm run test
 
@@ -627,6 +665,7 @@ jobs:
 ### CD: Bitrise
 
 Once CI passes, Bitrise picks up to handle:
+
 - Dependency installation
 - Detox tests on emulators/simulators
 - Full native builds via Fastlane
@@ -643,20 +682,26 @@ This division of labor ensures both speed and safety across teams and platforms.
 Observability and runtime control are critical in a healthcare-grade mobile app. We implement a robust monitoring and experimentation stack that helps us catch bugs early, understand user behavior, and safely roll out features.
 
 ### Monitoring
+
 Monitoring tools ensure reliability by alerting developers to errors, performance regressions, or crashes:
+
 - **Sentry**: Captures unhandled JavaScript exceptions, network errors, and stack traces with user and environment metadata.
 - **Firebase Crashlytics**: Aggregates and reports native mobile crashes. Integrated with Android/iOS for OS-level insights.
 - **Datadog**: Tracks app performance metrics (startup time, memory usage, API latency) and helps trace root causes across systems.
-Each tool feeds into our incident response workflows to enable proactive triaging.
+  Each tool feeds into our incident response workflows to enable proactive triaging.
 
 ### Analytics & Tracking
+
 Understanding user flows helps us improve both UX and compliance outcomes:
+
 - **Firebase Analytics**: Records screen transitions, key business events (e.g., prescription redeemed), and conversion funnels.
 - **Custom tagging**: All analytics events are annotated with brand ID, platform, and user journey context.
-We use these insights to drive product improvements and to validate feature adoption across brands.
+  We use these insights to drive product improvements and to validate feature adoption across brands.
 
 ### Feature Flags
+
 To ship confidently in a dual-brand environment, we use feature flags to gate new capabilities:
+
 - **LaunchDarkly** or **Firebase Remote Config**: Enable toggling features on/off remotely without app updates.
 - Supports A/B testing, gradual rollout by brand or user segment, and instant rollback.
 

@@ -1,16 +1,16 @@
-import React from 'react';
-import styled, { useTheme } from 'styled-components/native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useNavigation } from '@react-navigation/native';
-import { PressableStateCallbackType } from 'react-native';
-import { ThemeType } from '@repo/theme/themes/types';
+import React from 'react'
+import styled, { useTheme } from 'styled-components/native'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { useNavigation } from '@react-navigation/native'
+import { PressableStateCallbackType } from 'react-native'
+import { ThemeType } from '@repo/theme/themes/types'
 
 export const RedeemButton: React.FC = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation()
 
   const handlePress = () => {
-    navigation.navigate('Prescriptions');
-  };
+    navigation.navigate('Prescriptions')
+  }
 
   return (
     <Wrapper>
@@ -27,13 +27,13 @@ export const RedeemButton: React.FC = () => {
         <ButtonText>Redeem e-prescription</ButtonText>
       </ButtonContainer>
     </Wrapper>
-  );
-};
+  )
+}
 
 const Wrapper = styled.View`
   width: 100%;
   margin-top: 20px;
-`;
+`
 
 const ButtonContainer = styled.Pressable<{ theme: ThemeType }>`
   flex-direction: row;
@@ -42,10 +42,10 @@ const ButtonContainer = styled.Pressable<{ theme: ThemeType }>`
   background-color: ${({ theme }) => theme.colors.primary.primary1};
   padding: 16px 24px;
   border-radius: 12px;
-`;
+`
 
 const ButtonText = styled.Text`
   color: white;
   font-size: 16px;
   font-weight: 600;
-`;
+`

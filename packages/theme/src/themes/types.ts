@@ -38,7 +38,7 @@ export interface ThemeType {
     };
 
     caption: {
-      '1': {
+      "1": {
         regular: Font;
         medium: Font;
         strikethrough: {
@@ -49,39 +49,39 @@ export interface ThemeType {
           fontWeight: string;
         };
       };
-      '2': {
+      "2": {
         regular: Font;
         medium: Font;
       };
-      '4': {
+      "4": {
         medium: Font;
       };
     };
     body: {
-      '1': {
+      "1": {
         regular: Font;
         semiBold: Font;
       };
-      '2': {
+      "2": {
         medium: Font;
       };
-      '3': {
+      "3": {
         regular: Font;
         medium: Font;
       };
     };
 
     title: {
-      '1': {
+      "1": {
         semiBold: Font;
       };
-      '2': {
+      "2": {
         semiBold: Font;
       };
-      '3': {
+      "3": {
         semiBold: Font;
       };
-      '4': {
+      "4": {
         bold: Font;
       };
     };

@@ -1,10 +1,10 @@
-import React, { FC } from 'react';
-import styled from 'styled-components/native';
-import { ScrollView } from 'react-native';
+import React, { FC } from 'react'
+import styled from 'styled-components/native'
+import { ScrollView } from 'react-native'
 
 type ScreenProps = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+}
 
 const ScrollContainer = styled(ScrollView).attrs({
   contentContainerStyle: {
@@ -15,8 +15,8 @@ const ScrollContainer = styled(ScrollView).attrs({
   },
 })`
   flex: 1;
-`;
+`
 
 export const Screen: FC<ScreenProps> = ({ children }) => (
   <ScrollContainer>{children}</ScrollContainer>
-);
+)

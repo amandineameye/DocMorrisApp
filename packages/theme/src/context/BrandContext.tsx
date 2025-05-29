@@ -1,6 +1,6 @@
-import React, { createContext, useContext, ReactNode } from 'react';
-import { ThemeProvider } from 'styled-components/native';
-import { BrandConfig } from '../brandConfig';
+import React, { createContext, useContext, ReactNode } from "react";
+import { ThemeProvider } from "styled-components/native";
+import { BrandConfig } from "../brandConfig";
 
 const BrandContext = createContext<BrandConfig | undefined>(undefined);
 
@@ -20,7 +20,7 @@ export const BrandProvider = ({ config, children }: BrandProviderProps) => {
 export const useBrand = () => {
   const context = useContext(BrandContext);
   if (!context) {
-    throw new Error('useBrand must be used within a BrandProvider');
+    throw new Error("useBrand must be used within a BrandProvider");
   }
   return context;
 };

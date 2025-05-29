@@ -6,13 +6,13 @@
     "./products/*": "./src/products/*.ts"
   },
   "scripts": {
-     "dev": "tsc --watch",
+    "dev": "tsc --watch",
     "build": "tsc",
     "lint": "eslint . --max-warnings 0",
     "generate:component": "turbo gen react-component",
     "check-types": "tsc --noEmit"
   },
-  "devDependencies": { 
+  "devDependencies": {
     "@turbo/gen": "2.5.0",
     "@types/node": "22.15.3",
     "typescript": "5.8.2",
@@ -21,7 +21,7 @@
     "@types/react": "19.1.6"
   },
   "peerDependencies": {
-  "react": "19.0.0",
-  "@repo/theme": "*"
-}
+    "react": "19.0.0",
+    "@repo/theme": "*"
+  }
 }
