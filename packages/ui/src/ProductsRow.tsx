@@ -29,22 +29,7 @@ export const ProductsRow = ({ title, products }: ProductsRowProps) => {
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <Products>
           {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              productId={product.id}
-              name={product.name}
-              dosage={product.dosage}
-              unit={product.unit}
-              type={product.type}
-              rating={product.rating}
-              reviewsCount={product.reviewsCount}
-              originalPrice={product.originalPrice}
-              discountedPrice={product.discountedPrice}
-              discountPercent={product.discountPercent}
-              pricePerUnit={product.pricePerUnit}
-              isFavorite={product.isFavorite}
-              onPress={() => {}}
-            />
+            <ProductCard key={product.id} {...product} />
           ))}
         </Products>
       </ScrollView>

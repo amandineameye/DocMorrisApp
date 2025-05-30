@@ -1,14 +1,13 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components/native'
 import { Image, View, TextStyle } from 'react-native'
-import { useBrand } from '@repo/theme'
+import { useBrand, Theme } from '@repo/theme'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useProductStore } from '@repo/stores/products'
 import { PressableStateCallbackType } from 'react-native'
-import { Theme } from '@repo/theme'
 
 type ProductCardProps = {
-  productId: number
+  id: number
   name: string
   dosage?: string
   unit?: string
@@ -20,11 +19,10 @@ type ProductCardProps = {
   discountPercent?: number
   pricePerUnit?: string
   onPress?: () => void
-  isFavorite?: boolean
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({
-  productId,
+  id,
   name,
   dosage,
   unit,
@@ -35,21 +33,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   discountedPrice,
   discountPercent,
   pricePerUnit,
-  onPress,
-  isFavorite: isFavoriteProp = false,
+  onPress = () => {},
 }) => {
   const theme = useTheme() as Theme
   const { productImgs } = useBrand()
 
   const toggleFavorite = useProductStore((state) => state.toggleFavorite)
   const isFavorite = useProductStore(
-    (state) => state.products.find((p) => p.id === productId)?.isFavorite ?? false,
+    (state) => state.products.find((p) => p.id === id)?.isFavorite ?? false,
   )
 
   return (
     <CardContainer onPress={onPress} accessibilityRole="button">
       <FavoriteButton
-        onPress={() => toggleFavorite(productId)}
+        onPress={() => toggleFavorite(id)}
         accessibilityRole="button"
         style={({ pressed }: PressableStateCallbackType) => ({
           opacity: pressed ? 0.8 : 1,
@@ -67,7 +64,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         {/* Top Section */}
         <View>
           <StyledImageWrapper>
-            <StyledImage source={productImgs[productId]?.image} />
+            <StyledImage source={productImgs.find((p) => p.id === id)?.image} />
           </StyledImageWrapper>
 
           <ProductName
