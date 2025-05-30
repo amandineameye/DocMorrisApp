@@ -1,6 +1,6 @@
-import React, { createContext, useContext, ReactNode } from 'react'
+import { createContext, useContext, ReactNode } from 'react'
 import { ThemeProvider } from 'styled-components/native'
-import { BrandConfig } from '../brandConfig'
+import { type BrandConfig } from './brandBaseConfigs'
 
 const BrandContext = createContext<BrandConfig | undefined>(undefined)
 

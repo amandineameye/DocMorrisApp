@@ -1,6 +1,6 @@
-import { ThemeType } from './types'
+import { Theme } from './types'
 
-export const docMorrisTheme: ThemeType = {
+export const docMorrisTheme: Theme = {
   colors: {
     primary: {
       primary1: '#00463D',

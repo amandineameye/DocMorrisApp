@@ -313,15 +313,15 @@ Each app provides its own `brandConfig`, extending a shared base with runtime as
 
 ```tsx
 // apps/docmorris/App.tsx
-import { BrandProvider } from "@repo/theme/context";
-import { brandConfig } from "./brandConfig";
+import { BrandProvider } from '@repo/theme/context'
+import { brandConfig } from './brandConfig'
 
 export default function App() {
   return (
     <BrandProvider config={brandConfig}>
       <TabsNavigator />
     </BrandProvider>
-  );
+  )
 }
 ```
 
@@ -333,7 +333,7 @@ export default function App() {
 Themes are strongly typed and organized around tokens:
 
 ```ts
-interface ThemeType {
+interface Theme {
   colors: {
     primary: { primary1: string; background: string; /* ... */ };
     secondary: { secondary1: string; /* ... */ };
@@ -393,16 +393,16 @@ The native layer plays a critical role in enabling hardware-dependent functional
 **Sample NFC Reader**
 
 ```ts
-import NfcManager, { NfcTech } from "react-native-nfc-manager";
+import NfcManager, { NfcTech } from 'react-native-nfc-manager'
 
 export async function readEGK() {
-  await NfcManager.start();
+  await NfcManager.start()
   try {
-    await NfcManager.requestTechnology(NfcTech.Ndef);
-    const tag = await NfcManager.getTag();
-    return tag;
+    await NfcManager.requestTechnology(NfcTech.Ndef)
+    const tag = await NfcManager.getTag()
+    return tag
   } finally {
-    NfcManager.cancelTechnologyRequest();
+    NfcManager.cancelTechnologyRequest()
   }
 }
 ```
@@ -645,7 +645,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "18"
+          node-version: '18'
       - run: npm install
       - run: npm run test
 

@@ -5,7 +5,7 @@ import { useBrand } from '@repo/theme'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useProductStore } from '@repo/stores/products'
 import { PressableStateCallbackType } from 'react-native'
-import { ThemeType } from '@repo/theme'
+import { Theme } from '@repo/theme'
 
 type ProductCardProps = {
   productId: number
@@ -38,7 +38,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   onPress,
   isFavorite: isFavoriteProp = false,
 }) => {
-  const theme = useTheme() as ThemeType
+  const theme = useTheme() as Theme
   const { productImgs } = useBrand()
 
   const toggleFavorite = useProductStore((state) => state.toggleFavorite)
@@ -149,7 +149,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   )
 }
 
-const CardContainer = styled.Pressable<{ theme: ThemeType }>`
+const CardContainer = styled.Pressable<{ theme: Theme }>`
   width: 200px;
   border-radius: 16px;
   background-color: ${({ theme }) => theme.colors.primary.background};
@@ -167,7 +167,7 @@ const CardContainer = styled.Pressable<{ theme: ThemeType }>`
   margin: 16px 16px 16px 10px;
 `
 
-const FavoriteButton = styled.Pressable<{ theme: ThemeType }>`
+const FavoriteButton = styled.Pressable<{ theme: Theme }>`
   position: absolute;
   top: 12px;
   right: 12px;
@@ -199,7 +199,7 @@ const StyledImage = styled(Image)`
   resize-mode: contain;
 `
 
-const ProductName = styled.Text<{ theme: ThemeType }>`
+const ProductName = styled.Text<{ theme: Theme }>`
   color: ${({ theme }) => theme.colors.secondary.secondary1};
   margin-bottom: 2px;
   height: 48px;
@@ -230,7 +230,7 @@ const PriceLeft = styled.View`
   align-items: center;
 `
 
-const DiscountBadge = styled.View<{ theme: ThemeType }>`
+const DiscountBadge = styled.View<{ theme: Theme }>`
   background-color: ${({ theme }) => theme.colors.interferer.interferer1};
   border-radius: 4px;
   padding: 4px 8px;
@@ -242,12 +242,12 @@ const DiscountText = styled.Text`
   font-size: 14px;
 `
 
-const FinalPrice = styled.Text<{ theme: ThemeType }>`
+const FinalPrice = styled.Text<{ theme: Theme }>`
   color: ${({ theme }) => theme.colors.secondary.secondary1};
   font-size: 18px;
 `
 
-const PricePerUnit = styled.Text<{ theme: ThemeType }>`
+const PricePerUnit = styled.Text<{ theme: Theme }>`
   color: ${({ theme }) => theme.colors.secondary.secondary3};
   font-size: 12px;
 `

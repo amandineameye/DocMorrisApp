@@ -11,14 +11,14 @@ import { PrescriptionsScreen } from '@repo/prescription-services/screens'
 import { CartScreen } from '@repo/checkout/screens'
 import { AccountScreen } from '@repo/user-account/screens'
 
-import { ThemeType } from '@repo/theme'
+import { Theme } from '@repo/theme'
 
 const Tab = createBottomTabNavigator()
 
 export type TabParamList = StaticParamList<typeof Tab>
 
 export const TabsNavigator = () => {
-  const theme = useTheme() as ThemeType
+  const theme = useTheme() as Theme
 
   const navTheme = {
     ...DefaultTheme,

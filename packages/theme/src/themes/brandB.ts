@@ -1,6 +1,6 @@
-import { ThemeType } from './types'
+import { Theme } from './types'
 
-export const brandBTheme: ThemeType = {
+export const brandBTheme: Theme = {
   colors: {
     primary: {
       primary1: '#002F6C',

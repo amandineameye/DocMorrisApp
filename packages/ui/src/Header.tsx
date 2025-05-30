@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/native'
-import { useBrand, ThemeType } from '@repo/theme' // adjust import path as needed
+import { useBrand, Theme } from '@repo/theme' // adjust import path as needed
 import { Image } from 'react-native'
 
 export const Header: React.FC = () => {
@@ -20,7 +20,7 @@ export const Header: React.FC = () => {
   )
 }
 
-const Container = styled.View<{ theme: ThemeType }>`
+const Container = styled.View<{ theme: Theme }>`
   padding: 16px 0;
   background-color: ${({ theme }) => theme.colors.primary.background};
 
@@ -28,7 +28,7 @@ const Container = styled.View<{ theme: ThemeType }>`
   align-items: center;
 `
 
-const Logo = styled.Image<{ theme: ThemeType }>`
+const Logo = styled.Image<{ theme: Theme }>`
   width: 40px;
   height: 40px;
   margin-right: 12px;
@@ -36,7 +36,7 @@ const Logo = styled.Image<{ theme: ThemeType }>`
 
 const TextBlock = styled.View``
 
-const WelcomeText = styled.Text<{ theme: ThemeType }>`
+const WelcomeText = styled.Text<{ theme: Theme }>`
   color: ${({ theme }) => theme.colors.secondary.secondary1};
   font-family: ${({ theme }) => theme.fonts.caption['1'].regular.fontFamily};
   font-size: ${({ theme }) => theme.fonts.caption['1'].regular.fontSize}px;
@@ -44,7 +44,7 @@ const WelcomeText = styled.Text<{ theme: ThemeType }>`
   font-weight: ${({ theme }) => theme.fonts.caption['1'].regular.fontWeight};
 `
 
-const BrandText = styled.Text<{ theme: ThemeType }>`
+const BrandText = styled.Text<{ theme: Theme }>`
   color: ${({ theme }) => theme.colors.secondary.secondary1};
   font-family: ${({ theme }) => theme.fonts.title['2'].semiBold.fontFamily};
   font-size: ${({ theme }) => theme.fonts.title['2'].semiBold.fontSize}px;
