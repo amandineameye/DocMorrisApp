@@ -7,8 +7,6 @@ import { brandConfig } from './brandConfig'
 enableScreens()
 
 export default function App() {
-  console.log('BrandProvider:', BrandProvider)
-  console.log('typeof BrandProvider:', typeof BrandProvider)
   return (
     <SafeAreaProvider>
       <BrandProvider config={brandConfig}>
