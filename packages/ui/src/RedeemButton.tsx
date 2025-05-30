@@ -2,7 +2,6 @@ import React from 'react'
 import styled, { useTheme } from 'styled-components/native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useNavigation } from '@react-navigation/native'
-import { PressableStateCallbackType } from 'react-native'
 import { ThemeType } from '@repo/theme'
 
 export const RedeemButton: React.FC = () => {
@@ -16,7 +15,7 @@ export const RedeemButton: React.FC = () => {
     <Wrapper>
       <ButtonContainer
         onPress={handlePress}
-        style={({ pressed }: PressableStateCallbackType) => [
+        style={({ pressed }: { pressed: boolean }) => [
           {
             opacity: pressed ? 0.9 : 1,
             transform: [{ scale: pressed ? 0.98 : 1 }],
