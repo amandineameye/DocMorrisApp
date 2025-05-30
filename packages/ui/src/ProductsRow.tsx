@@ -1,10 +1,10 @@
 import { ScrollView } from 'react-native'
 import styled from 'styled-components/native'
 import { ProductCard } from './ProductCard'
-import { Product } from '@repo/stores/products/types'
+import { Product } from '@repo/stores/products'
 import { useTheme } from 'styled-components/native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { ThemeType } from '@repo/theme/themes/types'
+import { ThemeType } from '@repo/theme'
 
 export type ProductsRowProps = {
   title: string

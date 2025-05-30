@@ -5,13 +5,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import type { StaticParamList } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { HomeScreen } from '@repo/discovery/screens/HomeScreen'
-import { CategoriesScreen } from '@repo/discovery/screens/CategoriesScreen'
-import { PrescriptionsScreen } from '@repo/prescription-services/screens/PrescriptionsScreen'
-import { CartScreen } from '@repo/checkout/screens/CartScreen'
-import { AccountScreen } from '@repo/user-account/screens/AccountScreen'
+import { HomeScreen } from '@repo/discovery/screens'
+import { CategoriesScreen } from '@repo/discovery/screens'
+import { PrescriptionsScreen } from '@repo/prescription-services/screens'
+import { CartScreen } from '@repo/checkout/screens'
+import { AccountScreen } from '@repo/user-account/screens'
 
-import { ThemeType } from '@repo/theme/themes/types'
+import { ThemeType } from '@repo/theme'
 
 const Tab = createBottomTabNavigator()
 

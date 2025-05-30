@@ -3,14 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "exports": {
-    "./TabsNavigator": "./src/TabsNavigator.tsx",
-    "./types": "./src/types.ts"
+    ".": "./src/index.ts"
   },
   "scripts": {
     "dev": "tsc --watch",
     "build": "tsc",
     "lint": "eslint . --max-warnings 0",
-    "generate:component": "turbo gen react-component",
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {

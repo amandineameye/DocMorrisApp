@@ -3,7 +3,7 @@ import { TextInput, TextInputProps, Keyboard, TouchableOpacity, Animated } from 
 import styled from 'styled-components/native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useTheme } from 'styled-components/native'
-import { ThemeType } from '@repo/theme/themes/types'
+import { ThemeType } from '@repo/theme'
 
 type SearchBarProps = {
   value?: string

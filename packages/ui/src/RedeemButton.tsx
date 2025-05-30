@@ -3,7 +3,7 @@ import styled, { useTheme } from 'styled-components/native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useNavigation } from '@react-navigation/native'
 import { PressableStateCallbackType } from 'react-native'
-import { ThemeType } from '@repo/theme/themes/types'
+import { ThemeType } from '@repo/theme'
 
 export const RedeemButton: React.FC = () => {
   const navigation = useNavigation()

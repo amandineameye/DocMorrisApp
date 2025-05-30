@@ -1,8 +1,8 @@
 import React from 'react'
-import { TabsNavigator } from '@repo/navigation/TabsNavigator'
+import { TabsNavigator } from '@repo/navigation'
 import { enableScreens } from 'react-native-screens'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import { BrandProvider } from '@repo/theme/context'
+import { BrandProvider } from '@repo/theme'
 import { brandConfig } from './brandConfig'
 enableScreens()
 

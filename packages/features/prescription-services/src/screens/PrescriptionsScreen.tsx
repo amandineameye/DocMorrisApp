@@ -1,5 +1,5 @@
 import { Text } from 'react-native'
-import { Screen } from '@repo/ui/Screen'
+import { Screen } from '@repo/ui'
 import styled from 'styled-components/native'
 
 const Centered = styled.View`

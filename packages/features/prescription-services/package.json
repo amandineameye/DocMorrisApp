@@ -3,13 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "exports": {
-    "./types": "./src/types.ts",
-    "./screens/*": "./src/screens/*.tsx",
-    "./components/*": "./src/components/*.tsx"
+    "./screens": "./src/screens/index.ts"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
-    "generate:component": "turbo gen react-component",
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {

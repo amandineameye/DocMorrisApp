@@ -1,11 +1,11 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components/native'
 import { Image, View, TextStyle } from 'react-native'
-import { useBrand } from '@repo/theme/context'
+import { useBrand } from '@repo/theme'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { useProductStore } from '@repo/stores/products/store'
+import { useProductStore } from '@repo/stores/products'
 import { PressableStateCallbackType } from 'react-native'
-import { ThemeType } from '@repo/theme/themes/types'
+import { ThemeType } from '@repo/theme'
 
 type ProductCardProps = {
   productId: number

@@ -1,8 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/native'
-import { useBrand } from '@repo/theme/context' // adjust import path as needed
+import { useBrand, ThemeType } from '@repo/theme' // adjust import path as needed
 import { Image } from 'react-native'
-import { ThemeType } from '@repo/theme/themes/types'
 
 export const Header: React.FC = () => {
   const { name, logo } = useBrand()

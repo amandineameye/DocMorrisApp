@@ -1,4 +1,4 @@
-import {BrandConfig, brandBaseConfigs} from '@repo/theme/brandConfig';
+import { BrandConfig, brandBaseConfigs } from '@repo/theme'
 
 export const brandConfig: BrandConfig = {
   ...brandBaseConfigs.brandb,
@@ -26,4 +26,4 @@ export const brandConfig: BrandConfig = {
       image: require('./assets/products/med3.png'),
     },
   ],
-};
+}
