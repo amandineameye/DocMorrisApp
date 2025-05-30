@@ -1,21 +1,29 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
-import { useTheme } from 'styled-components/native'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import type { StaticParamList } from '@react-navigation/native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
-import { HomeScreen } from '@repo/discovery/screens'
-import { CategoriesScreen } from '@repo/discovery/screens'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { useTheme } from 'styled-components/native'
+import { type Theme } from '@repo/theme'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+
+import { HomeScreen, CategoriesScreen } from '@repo/discovery/screens'
 import { PrescriptionsScreen } from '@repo/prescription-services/screens'
 import { CartScreen } from '@repo/checkout/screens'
 import { AccountScreen } from '@repo/user-account/screens'
 
-import { Theme } from '@repo/theme'
+type TabBarIconProps = {
+  color: string
+  focused: boolean
+  size: number
+}
+
+type ScreenOptionsProps = {
+  route: {
+    name: 'Home' | 'Categories' | 'Cart' | 'Account' | 'Prescriptions'
+  }
+}
 
 const Tab = createBottomTabNavigator()
-
-export type TabParamList = StaticParamList<typeof Tab>
 
 export const TabsNavigator = () => {
   const theme = useTheme() as Theme
@@ -29,13 +37,13 @@ export const TabsNavigator = () => {
     },
   }
 
-  const screenOptions = ({ route }: { route: { name: string } }) => ({
+  const screenOptions = ({ route }: ScreenOptionsProps) => ({
     tabBarLabelStyle: {
       fontFamily: theme.fonts.button.medium.fontFamily,
     },
     headerShown: false,
-    tabBarIcon: ({ color }: { color: string }) => {
-      let iconName: string
+    tabBarIcon: ({ color }: TabBarIconProps) => {
+      let iconName
 
       switch (route.name) {
         case 'Home':
