@@ -10,48 +10,13 @@ type SearchBarProps = {
   onChangeText?: (text: string) => void
 } & TextInputProps
 
-const Wrapper = styled.View`
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-  position: relative;
-`
-
-const ArrowContainer = styled.View<{ theme: Theme; isClickable: boolean }>`
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  left: 0;
-  z-index: 1;
-  ${({ isClickable }) => (isClickable ? '' : 'pointer-events: none;')}
-`
-
-const Container = styled(Animated.View)`
-  flex-direction: row;
-  align-items: center;
-  background-color: ${({ theme }) => theme.colors.secondary.secondary6};
-  border-radius: 12px;
-  padding: 10px 14px;
-  flex: 1;
-  z-index: 2; /* Ensure this sits above the arrow */
-`
-
-// Base styled wrapper
-const InputBase = styled(TextInput)`
-  flex: 1;
-  font-size: 16px;
-  color: ${({ theme }) => theme.colors.secondary.secondary1};
-  font-family: ${({ theme }) => theme.fonts.input.text.regular.fontFamily};
-  margin-left: 10px;
-`
-
 // Forward ref correctly to TextInput
-const StyledInput = forwardRef<TextInput, any>((props, ref) => {
+const StyledInput = forwardRef<TextInput, TextInputProps>((props, ref) => {
   return <InputBase ref={ref} {...props} />
 })
 
 export const SearchBar = ({ value, onChangeText, ...props }: SearchBarProps) => {
-  const inputRef = useRef<TextInput>(null)
+  const inputRef = useRef<TextInput | null>(null)
   const [isFocused, setIsFocused] = useState(false)
   const marginLeft = useRef(new Animated.Value(0)).current
   const theme = useTheme() as Theme
@@ -95,3 +60,38 @@ export const SearchBar = ({ value, onChangeText, ...props }: SearchBarProps) => 
     </Wrapper>
   )
 }
+
+const Wrapper = styled.View`
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  position: relative;
+`
+
+const ArrowContainer = styled.View<{ theme: Theme; isClickable: boolean }>`
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 0;
+  z-index: 1;
+  ${({ isClickable }) => (isClickable ? '' : 'pointer-events: none;')}
+`
+
+const Container = styled(Animated.View)`
+  flex-direction: row;
+  align-items: center;
+  background-color: ${({ theme }) => theme.colors.secondary.secondary6};
+  border-radius: 12px;
+  padding: 10px 14px;
+  flex: 1;
+  z-index: 2; /* Ensure this sits above the arrow */
+`
+
+// Base styled wrapper
+const InputBase = styled.TextInput<{ theme: Theme }>`
+  flex: 1;
+  font-size: 16px;
+  color: ${({ theme }) => theme.colors.secondary.secondary1};
+  font-family: ${({ theme }) => theme.fonts.input.text.regular.fontFamily};
+  margin-left: 10px;
+`

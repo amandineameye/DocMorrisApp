@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/native'
 import { useBrand, Theme } from '@repo/theme' // adjust import path as needed
-import { Image } from 'react-native'
+import { Image, View } from 'react-native'
 
 export const Header: React.FC = () => {
   const { name, logo } = useBrand()
@@ -12,10 +12,10 @@ export const Header: React.FC = () => {
         source={logo}
         style={{ resizeMode: 'contain', width: 40, height: 40, marginRight: 12 }}
       />
-      <TextBlock>
+      <View>
         <WelcomeText>Welcome to</WelcomeText>
         <BrandText>{name}</BrandText>
-      </TextBlock>
+      </View>
     </Container>
   )
 }
@@ -23,18 +23,9 @@ export const Header: React.FC = () => {
 const Container = styled.View<{ theme: Theme }>`
   padding: 16px 0;
   background-color: ${({ theme }) => theme.colors.primary.background};
-
   flex-direction: row;
   align-items: center;
 `
-
-const Logo = styled.Image<{ theme: Theme }>`
-  width: 40px;
-  height: 40px;
-  margin-right: 12px;
-`
-
-const TextBlock = styled.View``
 
 const WelcomeText = styled.Text<{ theme: Theme }>`
   color: ${({ theme }) => theme.colors.secondary.secondary1};
