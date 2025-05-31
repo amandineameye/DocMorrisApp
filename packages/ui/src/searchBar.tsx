@@ -1,8 +1,7 @@
-import React, { useRef, useState, useEffect, forwardRef } from 'react'
+import { useRef, useState, useEffect, forwardRef } from 'react'
 import { TextInput, TextInputProps, Keyboard, TouchableOpacity, Animated } from 'react-native'
-import styled from 'styled-components/native'
+import styled, { useTheme } from 'styled-components/native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { useTheme } from 'styled-components/native'
 import { Theme } from '@repo/theme'
 
 type SearchBarProps = {

@@ -4,7 +4,7 @@ import { Image, View, TextStyle } from 'react-native'
 import { useBrand, Theme } from '@repo/theme'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useProductStore } from '@repo/stores/products'
-import { PressableStateCallbackType } from 'react-native'
+import { PressableStateCallbackType, ImageSourcePropType } from 'react-native'
 
 type ProductCardProps = {
   id: number
@@ -19,6 +19,28 @@ type ProductCardProps = {
   discountPercent?: number
   pricePerUnit?: string
   onPress?: () => void
+}
+
+type TopSectionProps = Pick<
+  ProductCardProps,
+  'id' | 'dosage' | 'unit' | 'type' | 'rating' | 'reviewsCount' | 'name'
+> & {
+  productImgs: { id: number; image: ImageSourcePropType }[]
+  theme: Theme
+}
+
+type TopRightCornerProps = {
+  toggleFavorite: (id: number) => void
+  id: number
+  isFavorite: boolean
+  theme: Theme
+}
+
+type BottomSectionProps = Pick<
+  ProductCardProps,
+  'originalPrice' | 'discountPercent' | 'discountedPrice' | 'pricePerUnit'
+> & {
+  theme: Theme
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({
@@ -45,106 +67,151 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <CardContainer onPress={onPress} accessibilityRole="button">
-      <FavoriteButton
-        onPress={() => toggleFavorite(id)}
-        accessibilityRole="button"
-        style={({ pressed }: PressableStateCallbackType) => ({
-          opacity: pressed ? 0.8 : 1,
-          transform: [{ scale: pressed ? 0.95 : 1 }],
-        })}
-      >
-        <Ionicons
-          name={isFavorite ? 'heart' : 'heart-outline'}
-          size={16}
-          color={theme.colors.secondary.secondary1}
-        />
-      </FavoriteButton>
-
+      <TopRightCorner
+        toggleFavorite={toggleFavorite}
+        id={id}
+        isFavorite={isFavorite}
+        theme={theme}
+      />
       <ContentWrapper>
-        {/* Top Section */}
-        <View>
-          <StyledImageWrapper>
-            <StyledImage source={productImgs.find((p) => p.id === id)?.image} />
-          </StyledImageWrapper>
-
-          <ProductName
-            numberOfLines={2}
-            ellipsizeMode="tail"
-            style={theme.fonts.title['3'].semiBold as TextStyle}
-          >
-            {name}
-          </ProductName>
-
-          {(dosage || type) && (
-            <TextBase style={theme.fonts.caption['1'].regular as TextStyle}>
-              {dosage && unit ? `${dosage} ${unit}` : ''} {type ? `| ${type}` : ''}
-            </TextBase>
-          )}
-
-          {rating !== undefined && (
-            <RatingRow>
-              {Array.from({ length: 5 }).map((_, index) => (
-                <Ionicons
-                  key={index}
-                  name={index < Math.floor(rating) ? 'star' : 'star-outline'}
-                  size={14}
-                  color="#FEC106"
-                  style={{ marginRight: 2 }}
-                />
-              ))}
-              <TextBase style={[theme.fonts.caption['1'].regular as TextStyle, { marginLeft: 4 }]}>
-                {rating.toFixed(1)} ({reviewsCount})
-              </TextBase>
-            </RatingRow>
-          )}
-        </View>
-
-        {/* Bottom Section */}
-        <View>
-          <PriceRow>
-            {originalPrice !== undefined && (
-              <TextBase
-                style={
-                  {
-                    ...theme.fonts.caption['1'].strikethrough,
-                    color: theme.colors.secondary.secondary3,
-                    marginRight: 6,
-                    textDecorationLine: 'line-through',
-                  } as TextStyle
-                }
-              >
-                {originalPrice.toFixed(2)} €
-              </TextBase>
-            )}
-          </PriceRow>
-
-          <FooterRow>
-            <PriceLeft>
-              {discountPercent !== undefined && (
-                <DiscountBadge>
-                  <DiscountText style={theme.fonts.caption['1'].medium as TextStyle}>
-                    -{discountPercent}%
-                  </DiscountText>
-                </DiscountBadge>
-              )}
-              {discountedPrice !== undefined && (
-                <FinalPrice style={theme.fonts.body['1'].semiBold as TextStyle}>
-                  {discountedPrice.toFixed(2)} €
-                </FinalPrice>
-              )}
-            </PriceLeft>
-
-            {pricePerUnit && (
-              <PricePerUnit style={theme.fonts.caption['2'].regular as TextStyle}>
-                {pricePerUnit}
-              </PricePerUnit>
-            )}
-          </FooterRow>
-        </View>
+        <TopSection
+          productImgs={productImgs}
+          dosage={dosage}
+          type={type}
+          unit={unit}
+          rating={rating}
+          reviewsCount={reviewsCount}
+          id={id}
+          name={name}
+          theme={theme}
+        />
+        <BottomSection
+          originalPrice={originalPrice}
+          discountPercent={discountPercent}
+          discountedPrice={discountedPrice}
+          pricePerUnit={pricePerUnit}
+          theme={theme}
+        />
       </ContentWrapper>
     </CardContainer>
   )
 }
+
+const TopRightCorner = ({ toggleFavorite, id, isFavorite, theme }: TopRightCornerProps) => (
+  <FavoriteButton
+    onPress={() => toggleFavorite(id)}
+    accessibilityRole="button"
+    style={({ pressed }: PressableStateCallbackType) => ({
+      opacity: pressed ? 0.8 : 1,
+      transform: [{ scale: pressed ? 0.95 : 1 }],
+    })}
+  >
+    <Ionicons
+      name={isFavorite ? 'heart' : 'heart-outline'}
+      size={16}
+      color={theme.colors.secondary.secondary1}
+    />
+  </FavoriteButton>
+)
+
+const TopSection = ({
+  productImgs,
+  theme,
+  dosage,
+  type,
+  unit,
+  rating,
+  reviewsCount,
+  id,
+  name,
+}: TopSectionProps) => (
+  <View>
+    <StyledImageWrapper>
+      <StyledImage source={productImgs.find((p) => p.id === id)?.image} />
+    </StyledImageWrapper>
+
+    <ProductName
+      numberOfLines={2}
+      ellipsizeMode="tail"
+      style={theme.fonts.title['3'].semiBold as TextStyle}
+    >
+      {name}
+    </ProductName>
+
+    {(dosage || type) && (
+      <TextBase style={theme.fonts.caption['1'].regular as TextStyle}>
+        {dosage && unit ? `${dosage} ${unit}` : ''} {type ? `| ${type}` : ''}
+      </TextBase>
+    )}
+
+    {rating !== undefined && (
+      <RatingRow>
+        {Array.from({ length: 5 }).map((_, index) => (
+          <Ionicons
+            key={index}
+            name={index < Math.floor(rating) ? 'star' : 'star-outline'}
+            size={14}
+            color="#FEC106"
+            style={{ marginRight: 2 }}
+          />
+        ))}
+        <TextBase style={[theme.fonts.caption['1'].regular as TextStyle, { marginLeft: 4 }]}>
+          {rating.toFixed(1)} ({reviewsCount})
+        </TextBase>
+      </RatingRow>
+    )}
+  </View>
+)
+
+const BottomSection = ({
+  originalPrice,
+  theme,
+  discountPercent,
+  discountedPrice,
+  pricePerUnit,
+}: BottomSectionProps) => (
+  <View>
+    <PriceRow>
+      {originalPrice !== undefined && (
+        <TextBase
+          style={
+            {
+              ...theme.fonts.caption['1'].strikethrough,
+              color: theme.colors.secondary.secondary3,
+              marginRight: 6,
+              textDecorationLine: 'line-through',
+            } as TextStyle
+          }
+        >
+          {originalPrice.toFixed(2)} €
+        </TextBase>
+      )}
+    </PriceRow>
+
+    <FooterRow>
+      <PriceLeft>
+        {discountPercent !== undefined && (
+          <DiscountBadge>
+            <DiscountText style={theme.fonts.caption['1'].medium as TextStyle}>
+              -{discountPercent}%
+            </DiscountText>
+          </DiscountBadge>
+        )}
+        {discountedPrice !== undefined && (
+          <FinalPrice style={theme.fonts.body['1'].semiBold as TextStyle}>
+            {discountedPrice.toFixed(2)} €
+          </FinalPrice>
+        )}
+      </PriceLeft>
+
+      {pricePerUnit && (
+        <PricePerUnit style={theme.fonts.caption['2'].regular as TextStyle}>
+          {pricePerUnit}
+        </PricePerUnit>
+      )}
+    </FooterRow>
+  </View>
+)
 
 const CardContainer = styled.Pressable<{ theme: Theme }>`
   width: 200px;

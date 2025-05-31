@@ -1,12 +1,13 @@
 import { docMorrisTheme, brandBTheme, type Theme } from '../themes'
+import { ImageSourcePropType } from 'react-native'
 
 export type BrandId = 'docmorris' | 'brandb'
 export interface BrandConfig {
   name: string
   theme: Theme
-  logo: any // handled by each app
-  ads: any[] // handled by each app
-  productImgs: { id: number; image: any }[] // handled by each app
+  logo: ImageSourcePropType // handled by each app
+  ads: ImageSourcePropType[] // handled by each app
+  productImgs: { id: number; image: ImageSourcePropType }[] // handled by each app
 }
 
 type BrandBaseConfig = Pick<BrandConfig, 'name' | 'theme'>
