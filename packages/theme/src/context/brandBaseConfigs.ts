@@ -6,7 +6,6 @@ export interface BrandConfig {
   name: string
   theme: Theme
   logo: ImageSourcePropType // handled by each app
-  ads: ImageSourcePropType[] // handled by each app
   productImgs: { id: number; image: ImageSourcePropType }[] // handled by each app
 }
 

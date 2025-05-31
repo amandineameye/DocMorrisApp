@@ -38,7 +38,7 @@ export const SearchBar = ({ value, onChangeText, ...props }: SearchBarProps) => 
     <Wrapper>
       <ArrowContainer isClickable={isFocused}>
         <TouchableOpacity onPress={handleDismiss}>
-          <Ionicons name="chevron-back" size={20} color={theme.colors.secondary.secondary3} />
+          <Ionicons name="chevron-back" size={20} color={theme.colors.secondary.secondary1} />
         </TouchableOpacity>
       </ArrowContainer>
 
@@ -67,19 +67,19 @@ const Wrapper = styled.View`
   position: relative;
 `
 
-const ArrowContainer = styled.View`
+const ArrowContainer = styled.View<{ isClickable: boolean }>`
   align-items: center;
   justify-content: center;
   position: absolute;
   left: 0;
   z-index: 1;
-  ${({ isClickable }: { isClickable: boolean }) => (isClickable ? '' : 'pointer-events: none;')}
+  ${({ isClickable }) => (isClickable ? '' : 'pointer-events: none;')}
 `
 
 const Container = styled(Animated.View)`
   flex-direction: row;
   align-items: center;
-  background-color: ${({ theme }: { theme: Theme }) => theme.colors.secondary.secondary6};
+  background-color: ${({ theme }) => theme.colors.secondary.secondary6};
   border-radius: 12px;
   padding: 10px 14px;
   flex: 1;
@@ -90,7 +90,7 @@ const Container = styled(Animated.View)`
 const InputBase = styled.TextInput`
   flex: 1;
   font-size: 16px;
-  color: ${({ theme }: { theme: Theme }) => theme.colors.secondary.secondary1};
-  font-family: ${({ theme }: { theme: Theme }) => theme.fonts.input.text.regular.fontFamily};
+  color: ${({ theme }) => theme.colors.secondary.secondary1};
+  font-family: ${({ theme }) => theme.fonts.input.text.regular.fontFamily};
   margin-left: 10px;
 `

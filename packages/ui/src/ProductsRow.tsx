@@ -59,7 +59,7 @@ export const RowTitle = styled.Text`
   font-size: 18px;
   font-weight: 600;
   font-family: 'Poppins';
-  color: ${({ theme }: { theme: Theme }) => theme?.colors.secondary.secondary1};
+  color: ${({ theme }) => theme?.colors.secondary.secondary1};
 `
 
 const Products = styled.View`

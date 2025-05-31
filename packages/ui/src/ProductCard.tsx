@@ -136,13 +136,13 @@ const TopSection = ({
     <ProductName
       numberOfLines={2}
       ellipsizeMode="tail"
-      style={theme.fonts.title['3'].semiBold as TextStyle}
+      style={theme.fonts.body['2'].medium as TextStyle}
     >
       {name}
     </ProductName>
 
     {(dosage || type) && (
-      <TextBase style={theme.fonts.caption['1'].regular as TextStyle}>
+      <TextBase style={theme.fonts.caption['2'].regular as TextStyle}>
         {dosage && unit ? `${dosage} ${unit}` : ''} {type ? `| ${type}` : ''}
       </TextBase>
     )}
@@ -217,16 +217,16 @@ const BottomSection = ({
 )
 
 const CardContainer = styled.Pressable`
-  width: 200px;
+  width: 240px;
   border-radius: 16px;
-  background-color: ${({ theme }: { theme: Theme }) => theme.colors.primary.background};
+  background-color: ${({ theme }) => theme.colors.primary.background};
   padding: 20px;
   shadow-color: #000;
   shadow-opacity: 0.1;
   shadow-offset: 0px 4px;
   shadow-radius: 12px;
   elevation: 4;
-  margin: 16px 16px 16px 10px;
+  margin: 16px 7px 16px 10px;
 `
 
 const FavoriteButton = styled.Pressable`
@@ -238,8 +238,7 @@ const FavoriteButton = styled.Pressable`
   width: 25px;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme }: { theme: Theme }) =>
-    theme?.colors.secondary.secondary7 || '#eee'};
+  background-color: ${({ theme }) => theme?.colors.secondary.secondary7 || '#eee'};
   border-radius: 12.5px;
 `
 
@@ -251,19 +250,19 @@ const ContentWrapper = styled.View`
 const StyledImageWrapper = styled.View`
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 5px;
   margin-bottom: 5px;
   width: 100%;
 `
 
-const StyledImage = styled(Image)`
-  width: 80px;
-  height: 80px;
+const StyledImage = styled.Image`
+  width: 100px;
+  height: 100px;
   resize-mode: contain;
 `
 
 const ProductName = styled.Text`
-  color: ${({ theme }: { theme: Theme }) => theme.colors.secondary.secondary1};
+  color: ${({ theme }) => theme.colors.secondary.secondary1};
   margin-bottom: 2px;
   height: 48px;
 `
@@ -294,7 +293,7 @@ const PriceLeft = styled.View`
 `
 
 const DiscountBadge = styled.View`
-  background-color: ${({ theme }: { theme: Theme }) => theme.colors.interferer.interferer1};
+  background-color: ${({ theme }) => theme.colors.interferer.interferer1};
   border-radius: 4px;
   padding: 4px 8px;
   margin-right: 8px;
@@ -306,11 +305,11 @@ const DiscountText = styled.Text`
 `
 
 const FinalPrice = styled.Text`
-  color: ${({ theme }: { theme: Theme }) => theme.colors.secondary.secondary1};
+  color: ${({ theme }) => theme.colors.secondary.secondary1};
   font-size: 18px;
 `
 
 const PricePerUnit = styled.Text`
-  color: ${({ theme }: { theme: Theme }) => theme.colors.secondary.secondary3};
+  color: ${({ theme }) => theme.colors.secondary.secondary3};
   font-size: 12px;
 `

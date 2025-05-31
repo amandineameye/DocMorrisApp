@@ -192,3 +192,7 @@ export const docMorrisTheme: Theme = {
     },
   },
 }
+
+import { DefaultTheme } from 'styled-components'
+
+const check: DefaultTheme = docMorrisTheme

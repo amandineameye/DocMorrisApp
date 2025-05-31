@@ -38,7 +38,7 @@ const ButtonContainer = styled.Pressable`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme }: { theme: Theme }) => theme.colors.primary.primary1};
+  background-color: ${({ theme }) => theme.colors.primary.primary1};
   padding: 16px 24px;
   border-radius: 12px;
 `
