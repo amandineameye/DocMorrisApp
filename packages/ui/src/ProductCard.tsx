@@ -217,7 +217,7 @@ const BottomSection = ({
 )
 
 const CardContainer = styled.Pressable`
-  width: 240px;
+  width: 210px;
   border-radius: 16px;
   background-color: ${({ theme }) => theme.colors.primary.background};
   padding: 20px;
@@ -226,7 +226,7 @@ const CardContainer = styled.Pressable`
   shadow-offset: 0px 4px;
   shadow-radius: 12px;
   elevation: 4;
-  margin: 16px 7px 16px 10px;
+  margin: 16px 5px 16px 10px;
 `
 
 const FavoriteButton = styled.Pressable`
