@@ -9,9 +9,10 @@ import { Theme } from '@repo/theme'
 export type ProductsRowProps = {
   title: string
   products: Product[]
+  onToggleFavorite?: (id: number) => void // ✅ Add this line
 }
 
-export const ProductsRow = ({ title, products }: ProductsRowProps) => {
+export const ProductsRow = ({ title, products, onToggleFavorite }: ProductsRowProps) => {
   const theme = useTheme() as Theme
 
   return (
@@ -29,7 +30,11 @@ export const ProductsRow = ({ title, products }: ProductsRowProps) => {
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <Products>
           {products.map((product) => (
-            <ProductCard key={product.id} {...product} />
+            <ProductCard
+              key={product.id}
+              {...product}
+              onToggleFavorite={onToggleFavorite} // ✅ Pass it down
+            />
           ))}
         </Products>
       </ScrollView>
@@ -50,11 +55,11 @@ const RowHeader = styled.View`
   padding: 0 12px;
 `
 
-export const RowTitle = styled.Text<{ theme: Theme }>`
+export const RowTitle = styled.Text`
   font-size: 18px;
   font-weight: 600;
   font-family: 'Poppins';
-  color: ${({ theme }) => theme?.colors.secondary.secondary1};
+  color: ${({ theme }: { theme: Theme }) => theme?.colors.secondary.secondary1};
 `
 
 const Products = styled.View`

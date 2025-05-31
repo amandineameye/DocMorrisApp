@@ -67,19 +67,19 @@ const Wrapper = styled.View`
   position: relative;
 `
 
-const ArrowContainer = styled.View<{ theme: Theme; isClickable: boolean }>`
+const ArrowContainer = styled.View`
   align-items: center;
   justify-content: center;
   position: absolute;
   left: 0;
   z-index: 1;
-  ${({ isClickable }) => (isClickable ? '' : 'pointer-events: none;')}
+  ${({ isClickable }: { isClickable: boolean }) => (isClickable ? '' : 'pointer-events: none;')}
 `
 
 const Container = styled(Animated.View)`
   flex-direction: row;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.secondary.secondary6};
+  background-color: ${({ theme }: { theme: Theme }) => theme.colors.secondary.secondary6};
   border-radius: 12px;
   padding: 10px 14px;
   flex: 1;
@@ -87,10 +87,10 @@ const Container = styled(Animated.View)`
 `
 
 // Base styled wrapper
-const InputBase = styled.TextInput<{ theme: Theme }>`
+const InputBase = styled.TextInput`
   flex: 1;
   font-size: 16px;
-  color: ${({ theme }) => theme.colors.secondary.secondary1};
-  font-family: ${({ theme }) => theme.fonts.input.text.regular.fontFamily};
+  color: ${({ theme }: { theme: Theme }) => theme.colors.secondary.secondary1};
+  font-family: ${({ theme }: { theme: Theme }) => theme.fonts.input.text.regular.fontFamily};
   margin-left: 10px;
 `

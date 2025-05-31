@@ -1,10 +1,14 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components/native'
-import { Image, View, TextStyle } from 'react-native'
+import {
+  Image,
+  View,
+  TextStyle,
+  PressableStateCallbackType,
+  ImageSourcePropType,
+} from 'react-native'
 import { useBrand, Theme } from '@repo/theme'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { useProductStore } from '@repo/stores/products'
-import { PressableStateCallbackType, ImageSourcePropType } from 'react-native'
 
 type ProductCardProps = {
   id: number
@@ -18,7 +22,10 @@ type ProductCardProps = {
   discountedPrice?: number
   discountPercent?: number
   pricePerUnit?: string
+  image?: ImageSourcePropType
+  isFavorite?: boolean
   onPress?: () => void
+  onToggleFavorite?: (id: number) => void
 }
 
 type TopSectionProps = Pick<
@@ -30,8 +37,7 @@ type TopSectionProps = Pick<
 }
 
 type TopRightCornerProps = {
-  toggleFavorite: (id: number) => void
-  id: number
+  toggleFavorite: () => void
   isFavorite: boolean
   theme: Theme
 }
@@ -56,20 +62,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   discountPercent,
   pricePerUnit,
   onPress = () => {},
+  image,
+  isFavorite = false,
+  onToggleFavorite,
 }) => {
   const theme = useTheme() as Theme
   const { productImgs } = useBrand()
 
-  const toggleFavorite = useProductStore((state) => state.toggleFavorite)
-  const isFavorite = useProductStore(
-    (state) => state.products.find((p) => p.id === id)?.isFavorite ?? false,
-  )
-
   return (
     <CardContainer onPress={onPress} accessibilityRole="button">
       <TopRightCorner
-        toggleFavorite={toggleFavorite}
-        id={id}
+        toggleFavorite={() => onToggleFavorite?.(id)}
         isFavorite={isFavorite}
         theme={theme}
       />
@@ -97,9 +100,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   )
 }
 
-const TopRightCorner = ({ toggleFavorite, id, isFavorite, theme }: TopRightCornerProps) => (
+const TopRightCorner = ({ toggleFavorite, isFavorite, theme }: TopRightCornerProps) => (
   <FavoriteButton
-    onPress={() => toggleFavorite(id)}
+    onPress={toggleFavorite}
     accessibilityRole="button"
     style={({ pressed }: PressableStateCallbackType) => ({
       opacity: pressed ? 0.8 : 1,
@@ -213,25 +216,20 @@ const BottomSection = ({
   </View>
 )
 
-const CardContainer = styled.Pressable<{ theme: Theme }>`
+const CardContainer = styled.Pressable`
   width: 200px;
   border-radius: 16px;
-  background-color: ${({ theme }) => theme.colors.primary.background};
+  background-color: ${({ theme }: { theme: Theme }) => theme.colors.primary.background};
   padding: 20px;
-
-  /* iOS shadow */
   shadow-color: #000;
   shadow-opacity: 0.1;
   shadow-offset: 0px 4px;
   shadow-radius: 12px;
-
-  /* Android shadow */
   elevation: 4;
-
   margin: 16px 16px 16px 10px;
 `
 
-const FavoriteButton = styled.Pressable<{ theme: Theme }>`
+const FavoriteButton = styled.Pressable`
   position: absolute;
   top: 12px;
   right: 12px;
@@ -240,7 +238,8 @@ const FavoriteButton = styled.Pressable<{ theme: Theme }>`
   width: 25px;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme }) => theme?.colors.secondary.secondary7 || '#eee'};
+  background-color: ${({ theme }: { theme: Theme }) =>
+    theme?.colors.secondary.secondary7 || '#eee'};
   border-radius: 12.5px;
 `
 
@@ -263,8 +262,8 @@ const StyledImage = styled(Image)`
   resize-mode: contain;
 `
 
-const ProductName = styled.Text<{ theme: Theme }>`
-  color: ${({ theme }) => theme.colors.secondary.secondary1};
+const ProductName = styled.Text`
+  color: ${({ theme }: { theme: Theme }) => theme.colors.secondary.secondary1};
   margin-bottom: 2px;
   height: 48px;
 `
@@ -294,8 +293,8 @@ const PriceLeft = styled.View`
   align-items: center;
 `
 
-const DiscountBadge = styled.View<{ theme: Theme }>`
-  background-color: ${({ theme }) => theme.colors.interferer.interferer1};
+const DiscountBadge = styled.View`
+  background-color: ${({ theme }: { theme: Theme }) => theme.colors.interferer.interferer1};
   border-radius: 4px;
   padding: 4px 8px;
   margin-right: 8px;
@@ -306,12 +305,12 @@ const DiscountText = styled.Text`
   font-size: 14px;
 `
 
-const FinalPrice = styled.Text<{ theme: Theme }>`
-  color: ${({ theme }) => theme.colors.secondary.secondary1};
+const FinalPrice = styled.Text`
+  color: ${({ theme }: { theme: Theme }) => theme.colors.secondary.secondary1};
   font-size: 18px;
 `
 
-const PricePerUnit = styled.Text<{ theme: Theme }>`
-  color: ${({ theme }) => theme.colors.secondary.secondary3};
+const PricePerUnit = styled.Text`
+  color: ${({ theme }: { theme: Theme }) => theme.colors.secondary.secondary3};
   font-size: 12px;
 `
