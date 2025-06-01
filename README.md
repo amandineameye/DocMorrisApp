@@ -260,7 +260,7 @@ We use **styled-components** in this React Native monorepo to ensure a scalable,
 
 ### Why not Restyle?
 
-- You can only use Restyle’s theming with its own components like <Box> or <Text>.
+- You can only use Restyle’s theming with its own components like `<Box>` or `<Text>`.
 - Native or third-party components (like from libraries) need extra wrappers to use the same styles.
 - When you mix your own components with native and library ones, styling becomes inconsistent and harder to manage.
 - It's not straightforward to apply styles based on props or state in a clean way.
