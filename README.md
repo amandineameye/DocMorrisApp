@@ -586,13 +586,16 @@ E2E coverage ensures the full customer journey is reproducible, including platfo
 ### Why These Testing Libraries?
 
 **Jest** → Chosen over Mocha, AVA, etc.  
-Jest is the de facto standard for JavaScript/TypeScript unit testing. It's widely supported in React Native ecosystems and integrates smoothly with monorepos — ideal for testing isolated business logic and hooks.
+- Jest is the de facto standard for JavaScript/TypeScript unit testing.
+- It's widely supported in React Native ecosystems and integrates smoothly with monorepos — ideal for testing isolated business logic and hooks.
 
 **React Native Testing Library (RNTL)** → Chosen over Enzyme or shallow rendering  
-RNTL encourages testing components as users interact with them, not by inspecting internal state. For example:  
+- RNTL encourages testing components as users interact with them, not by inspecting internal state. For example:
+
 ✅ “Does the spinner appear when I press the button?”  
-❌ “Did the isLoading state become true?”  
-Unlike Enzyme, which is not well-maintained for React Native, RNTL fully supports styled-components and themed rendering.
+❌ “Did the isLoading state become true?”
+
+- Unlike Enzyme, which is not well-maintained for React Native, RNTL fully supports styled-components and themed rendering.
 
 **Detox** → Chosen over Appium or manual QA  
 Detox is built specifically for React Native E2E testing. It runs directly on iOS and Android emulators with synchronization features, making it faster and more stable than Appium.  
