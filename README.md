@@ -332,7 +332,7 @@ This `brandConfig` is passed into `BrandProvider` at the root of the app:
 
 ```tsx
 // apps/docmorris/App.tsx
-import { BrandProvider } from '@repo/theme/context'
+import { BrandProvider } from '@repo/theme'
 import { brandConfig } from './brandConfig'
 
 export default function App() {
