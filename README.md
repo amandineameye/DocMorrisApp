@@ -322,10 +322,10 @@ That means all your UI components automatically reflect the selected brand’s l
 
 | Benefit | What it means |
 |--------|----------------|
-| ✅ Fully reusable UI | Components like `Button`, `Card`, `SearchBar` don’t know or care what brand they’re in. |
-| 🎯 Centralized theming | All visual styles come from a single source: the theme tokens in `@repo/theme`. |
-| ⚡ Easy brand switching | Just swap out `brandConfig` — the entire app updates its look. |
-| 🧪 Testable and maintainable | You can test components in isolation, independent of branding. |
+| Fully reusable UI | Components like `Button`, `Card`, `SearchBar` don’t know or care what brand they’re in. |
+| Centralized theming | All visual styles come from a single source: the theme tokens in `@repo/theme`. |
+| Easy brand switching | Just swap out `brandConfig` — the entire app updates its look. |
+| Testable and maintainable | You can test components in isolation, independent of branding. |
 
 
 ### Theme Structure (from `@repo/theme`)
