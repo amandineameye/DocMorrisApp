@@ -68,9 +68,9 @@ This document outlines the architectural and technical decisions for building a 
 
 ### Internal Testing 
 
-- **Firebase App Distribution (Android):** Used to send test builds quickly to the team. Great for early testing and fast feedback.
+- **Firebase App Distribution (Android):** Send test builds quickly to the team. Great for early testing and fast feedback.
 - **TestFlight (IOS):** Apple’s official testing tool. 
-- **Play Store Internal Track (Android):** Used to test the app through the real Play Store. It works like a real release, allowing to catch store-related issues before launch.
+- **Play Store Internal Track (Android):** Used to test the app through the real Play Store. Works like a real release, allowing to catch store-related issues before launch.
 
 ### Monitoring & Feature Flags
 
