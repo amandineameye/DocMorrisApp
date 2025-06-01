@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { fetchProducts, fetchUserFavorites } from '@repo/api/products'
+import { fetchProducts, fetchUserFavorites } from '@repo/services/products'
 import { useFavoriteStore } from '@repo/stores/products'
 import { useBrand } from '@repo/theme'
 import { useEffect } from 'react'

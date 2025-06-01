@@ -1,6 +1,6 @@
 // @repo/hooks/useToggleFavorite.ts
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { toggleFavoriteApi } from '@repo/api/products'
+import { toggleFavoriteApi } from '@repo/services/products'
 import { useFavoriteStore } from '@repo/stores/products'
 
 export const useToggleFavorite = () => {

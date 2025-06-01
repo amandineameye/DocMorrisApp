@@ -24,6 +24,6 @@ export const toggleFavoriteApi = (productId: number): Promise<void> => {
         mockFavoriteIds.push(productId)
       }
       resolve()
-    }, 300)
+    }, 100)
   })
 }
