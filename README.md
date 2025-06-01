@@ -598,8 +598,8 @@ E2E coverage ensures the full customer journey is reproducible, including platfo
 - Unlike Enzyme, which is not well-maintained for React Native, RNTL fully supports styled-components and themed rendering.
 
 **Detox** → Chosen over Appium or manual QA  
-Detox is built specifically for React Native E2E testing. It runs directly on iOS and Android emulators with synchronization features, making it faster and more stable than Appium.  
-It handles native modules like NFC and camera permissions reliably — critical for testing e-prescription and hardware flows.
+- Detox is built specifically for React Native E2E testing. It runs directly on iOS and Android emulators with synchronization features, making it faster and more stable than Appium.
+- It handles native modules like NFC and camera permissions reliably — critical for testing e-prescription and hardware flows.
 
 ## 🚀 Deployment Strategy
 
