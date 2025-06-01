@@ -508,7 +508,8 @@ Local storage is split into two clear categories based on data sensitivity:
 
 ### Non-sensitive Data
 
-Used to cache user preferences, UI states, session flags, and temporary metadata.
+Used to cache user preferences, UI states, session flags, and temporary metadata.  
+Examples: Theme preference, onboarding status
 
 #### Tool: `react-native-mmkv`
 
@@ -516,13 +517,6 @@ Used to cache user preferences, UI states, session flags, and temporary metadata
 - Encryption supported, but optional for this layer
 - Used to persist non-critical app state between launches
 
-#### Examples:
-
-| Data Type         | Use Case                          |
-| ----------------- | --------------------------------- |
-| Onboarding status | Whether user completed onboarding |
-| Active brand ID   | Selected brand ('brandA', etc.)   |
-| Theme preference  | Light/Dark mode                   |
 
 ### Sensitive Data
 
@@ -579,14 +573,30 @@ Each feature module includes unit tests for business logic and reusable UI compo
 
 Tests follow a colocated structure:
 
-- Business logic is placed in services/, hooks in hooks/, and each has its respective test files inside **tests**/ folders or colocated near the file.
+- Business logic tests are placed in services/, hooks tests in hooks/, and each has its respective test files inside **tests**/ folders or colocated near the file.
 - We aim for high coverage on medication logic, prescription workflows, and conditional UI states.
 
 ### E2E Testing
 
-- We use Detox for end-to-end flows — prescription redemption, QR scanning, authentication, and checkout.
-- Tests run on both iOS and Android simulators/emulators as part of our CI pipeline (Bitrise).
-  E2E coverage ensures the full customer journey is reproducible, including platform-specific permissions like camera access and NFC handshakes.
+- We use Detox for end-to-end flows — prescription redemption, QR scanning, authentication, checkout etc.
+- Tests run on both iOS and Android simulators/emulators as part of our CI pipeline (Bitrise).  
+
+E2E coverage ensures the full customer journey is reproducible, including platform-specific permissions like camera access and NFC handshakes.
+
+### Why These Testing Libraries?
+
+**Jest** → Chosen over Mocha, AVA, etc.
+Jest is the de facto standard for JavaScript/TypeScript unit testing. It's widely supported in React Native ecosystems and integrates smoothly with monorepos — ideal for testing isolated business logic and hooks.
+
+**React Native Testing Library (RNTL)** → Chosen over Enzyme or shallow rendering
+RNTL encourages testing components as users interact with them, not by inspecting internal state. For example:  
+✅ “Does the spinner appear when I press the button?”  
+❌ “Did the isLoading state become true?”  
+Unlike Enzyme, which is not well-maintained for React Native, RNTL fully supports styled-components and themed rendering.
+
+**Detox** → Chosen over Appium or manual QA
+Detox is built specifically for React Native E2E testing. It runs directly on iOS and Android emulators with synchronization features, making it faster and more stable than Appium.
+It handles native modules like NFC and camera permissions reliably — critical for testing e-prescription and hardware flows.
 
 ## 🚀 Deployment Strategy
 
