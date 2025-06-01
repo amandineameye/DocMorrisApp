@@ -5,13 +5,13 @@ let mockFavoriteIds: number[] = [0] // default favorites (you can start empty)
 
 export const fetchProducts = (): Promise<Product[]> => {
   return new Promise((resolve) => {
-    setTimeout(() => resolve(initialProducts), 300) // simulate API delay
+    setTimeout(() => resolve(initialProducts), 100) // simulate API delay
   })
 }
 
 export const fetchUserFavorites = async (): Promise<number[]> => {
   return await new Promise((resolve) => {
-    setTimeout(() => resolve([0, 2]), 300)
+    setTimeout(() => resolve(mockFavoriteIds), 100)
   })
 }
 
@@ -23,6 +23,7 @@ export const toggleFavoriteApi = (productId: number): Promise<void> => {
       } else {
         mockFavoriteIds.push(productId)
       }
+      console.log('mockFavoriteIds: ', mockFavoriteIds);
       resolve()
     }, 100)
   })
