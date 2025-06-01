@@ -311,6 +311,66 @@ export default function App() {
 - `BrandProvider` injects the current brand's `theme` using `ThemeProvider`.
 - All `@repo/ui` components consume `theme` values directly—no need for brand-specific logic.
 
+## ♻️ Component Reusability Strategy
+
+To support true multi-brand scalability, the `@repo/theme` package centralizes all brand-specific tokens and runtime assets — enabling each app to seamlessly apply its own branding **without duplicating UI code**.
+
+### What’s in `@repo/theme`?
+- **Specific brand theme objects**: Colors, fonts, spacing — typed and structured for consistency.
+- **BrandProvider**: A wrapper that applies brand-specific config to the app.
+- **useBrand hook**: Provides access to brand-specific theme and runtime assets (e.g. logos, product images, ad banners).
+
+---
+
+### How it works
+
+Each app (e.g. DocMorris, BrandB) defines its own `brandConfig`, which includes:
+- A theme object (e.g. `docMorrisTheme`) with color/font tokens
+- Runtime brand assets (e.g. logos, images, banners)
+
+This `brandConfig` is passed into `BrandProvider` at the root of the app:
+
+```tsx
+// apps/docmorris/App.tsx
+import { BrandProvider } from '@repo/theme/context'
+import { brandConfig } from './brandConfig'
+
+export default function App() {
+  return (
+    <BrandProvider config={brandConfig}>
+      <TabsNavigator />
+    </BrandProvider>
+  )
+}
+```
+
+---
+
+### What does `BrandProvider` actually do?
+
+Internally, `BrandProvider` wraps your app with two powerful layers:
+
+1. **React Context (`BrandContext`)**  
+   Exposes brand-specific runtime data via the `useBrand()` hook.
+
+2. **Styled-Components’ `ThemeProvider`**  
+   Injects the active brand’s theme tokens — making them available to every `@repo/ui` component via `styled-components`.
+
+That means all your UI components automatically reflect the selected brand’s look & feel — without having to write any brand logic in them.
+
+---
+
+### Why this matters
+
+| Benefit | What it means |
+|--------|----------------|
+| ✅ Fully reusable UI | Components like `Button`, `Card`, `SearchBar` don’t know or care what brand they’re in. |
+| 🎯 Centralized theming | All visual styles come from a single source: the theme tokens in `@repo/theme`. |
+| ⚡ Easy brand switching | Just swap out `brandConfig` — the entire app updates its look. |
+| 🧪 Testable and maintainable | You can test components in isolation, independent of branding. |
+
+---
+
 ### Theme Structure (from `@repo/theme`)
 
 Themes are strongly typed and organized around tokens:
@@ -331,7 +391,7 @@ interface Theme {
 }
 ```
 
-Each brand exports its own variant (`docMorrisTheme`, `brandBTheme`) from `@repo/theme/themes`.
+Each brand exports its own variant (`docMorrisTheme`, `brandBTheme`) from `@repo/theme`.
 
 ### Example: Themed Component from `@repo/ui`
 
@@ -354,7 +414,7 @@ const StyledButton = styled.TouchableOpacity\`
 | `@repo/ui`    | Generic, theme-aware components                       |
 | App           | Selects brand config and injects it at runtime        |
 
-This modular layering ensures that the UI is fully reusable while supporting unique branding per app instance. Let me know if you'd like to document best practices for adding new tokens or brands!
+This modular layering ensures that the UI is fully reusable while supporting unique branding per app instance. 
 
 ## 📲 Native Integrations
 
