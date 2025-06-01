@@ -98,7 +98,7 @@ packages/
     checkout/
     user-account/
     prescription-services/
-  data-access/
+  services/
   navigation/
   theme/
   config/
