@@ -4,13 +4,17 @@
 
 This document outlines the architectural and technical decisions for building a cross-platform mobile app for two licensed online pharmacy brands under **DocMorris N.V.**, targeting both Android and iOS platforms. The architecture emphasizes scalability, maintainability, team collaboration, and compliance with healthcare data regulations in Germany.
 
+Key project characteristics include:
+- Functional parity across both brands, with distinct theming and branding per app.
+- A team structure of 5 mobile development squads and 1 backend team, collaborating in parallel.
+- Secure and performant support for e-prescription workflows, including QR code scanning and NFC health card integration.
+
 ## 🔍 Assumptions
 
-1. Functional parity between both brands with distinct branding.
-2. Teams consist of 5 mobile development squads and 1 backend team.
-3. Secure and performant support for e-prescriptions (QR, NFC).
-4. Monorepo development for streamlined collaboration.
-5. Security and data protection are paramount due to the sensitive nature of health data.
+1. The architecture must support dynamic theming and shared code across multiple brands.
+2. All tooling should be flexible, unopinionated, and easy to adopt across teams.
+3. Versioning and release cycles are unified across brands and features — per-package versioning is not required.
+4. The monorepo is scoped to mobile development; the backend team provides APIs separately and maintains them outside this codebase.
 
 ## 🧱 Technology Stack
 
