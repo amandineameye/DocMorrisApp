@@ -243,18 +243,11 @@ We use **styled-components** in this React Native monorepo to ensure a scalable,
 
 ### Why styled-components?
 
-- **Scoped styles, clean JSX**
-  Styles are defined alongside component logic, but without cluttering the render code. This preserves both readability and separation of concerns.
-- **Dynamic theming via ThemeProvider**
-  Inject a full theme object contextually (e.g., per brand) and access it in all styled components with full type support.
-- **Flexible styling for all components**
-  Supports styling any native or custom component — no need to adopt wrapper-specific primitives.
-- **Dynamic styling via props and logic**
-  Write expressive, condition-based styles using regular JavaScript and component props.
-- **Seamless TypeScript support**
-  - IntelliSense for component props and theme values
-  - Autocompletion for tokens and styles
-  - Type-checked style definitions with helpful IDE feedback
+- **Scoped styles, clean JSX:** Styles are defined alongside component logic, but without cluttering the render code. This preserves both readability and separation of concerns.
+- **Dynamic theming via ThemeProvider:** Inject a full theme object contextually (e.g., per brand) and access it in all styled components with full type support.
+- **Flexible styling for all components:** Supports styling any native or custom component — no need to adopt wrapper-specific primitives.
+- **Dynamic styling via props and logic:** Write expressive, condition-based styles using regular JavaScript and component props.
+- **Seamless TypeScript support:** Get autocomplete for props and theme tokens like colors.primary, plus instant type checking and IDE feedback.
 
 ### Why not NativeWind?
 
@@ -267,11 +260,11 @@ We use **styled-components** in this React Native monorepo to ensure a scalable,
 
 ### Why not Restyle?
 
-- Theming is only supported through Restyle's limited component set (<Box>, <Text>, etc.)
-- Lacks flexibility to style native or third-party components without extra wrappers
-- Less ergonomic in real-world component trees that mix custom and external components
-- No support for conditionally styled props in a clean, intuitive way
-- TypeScript support is functional but less expressive and harder to extend for dynamic styles
+- You can only use Restyle’s theming with its own components like <Box> or <Text>.
+- Native or third-party components (like from libraries) need extra wrappers to use the same styles.
+- When you mix your own components with native and library ones, styling becomes inconsistent and harder to manage.
+- It's not straightforward to apply styles based on props or state in a clean way.
+- Autocomplete and type checking work, but are limited.
 
 We prioritize **component-level styling, rich theming, code clarity, and TypeScript support.**
 **styled-components** provides the most balanced and future-proof solution for these requirements in a multi-brand React Native app.
