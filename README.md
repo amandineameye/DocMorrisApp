@@ -768,39 +768,46 @@ Git clone → Install deps → Run E2E tests → Build → Deploy
 
 ## 📡 Monitoring, Tracking & Feature Flagging
 
-Observability and runtime control are critical in a healthcare-grade mobile app. We implement a robust monitoring and experimentation stack that helps us catch bugs early, understand user behavior, and safely roll out features.
+In healthcare apps, bugs or crashes can impact user trust or safety. We use special tools to track issues, monitor performance, and control what features are active in the app — even after it's released.
 
-### Monitoring
+### Monitoring (Bug & Crash Tracking)
 
-Monitoring tools ensure reliability by alerting developers to errors, performance regressions, or crashes:
+These tools tell us if something breaks or slows down:
 
-- **Sentry**: Captures unhandled JavaScript exceptions, network errors, and stack traces with user and environment metadata.
-- **Firebase Crashlytics**: Aggregates and reports native mobile crashes. Integrated with Android/iOS for OS-level insights.
-- **Datadog**: Tracks app performance metrics (startup time, memory usage, API latency) and helps trace root causes across systems.
-  Each tool feeds into our incident response workflows to enable proactive triaging.
+- **Sentry**: Catches JavaScript errors, failed API calls, and shows what the user was doing when it happened.
+- **Firebase Crashlytics**: Tracks native (iOS/Android) app crashes and gives detailed reports by device or OS.
+- **Datadog**: Monitors performance (startup speed, memory use, slow APIs) and helps find root causes across backend and app.
 
-### Analytics & Tracking
+These tools alert us fast, so we can fix issues before they affect more users.
 
-Understanding user flows helps us improve both UX and compliance outcomes:
+### Analytics & Tracking (User Behavior)
 
-- **Firebase Analytics**: Records screen transitions, key business events (e.g., prescription redeemed), and conversion funnels.
-- **Custom tagging**: All analytics events are annotated with brand ID, platform, and user journey context.
-  We use these insights to drive product improvements and to validate feature adoption across brands.
+We track how people use the app to improve UX and feature adoption:
+
+- **Firebase Analytics**: Logs screen views and key actions like scanning a prescription or checking out.
+- **Custom tagging**: Every event includes info like brand, platform, and where the user is in their journey.
+
+This helps us see what works, what’s confusing, and where users drop off.
 
 ### Feature Flags
 
-To ship confidently in a dual-brand environment, we use feature flags to gate new capabilities:
+We don’t have to release every feature to everyone at once. Instead, we use:
 
-- **LaunchDarkly** or **Firebase Remote Config**: Enable toggling features on/off remotely without app updates.
-- Supports A/B testing, gradual rollout by brand or user segment, and instant rollback.
+- **LaunchDarkly** or **Firebase Remote Config**: To turn features on/off without needing to update the app.
 
-This gives both developers and product managers flexible control over deployments, experiments, and phased launches.
+Benefits:
+
+- Test features with a small group (A/B testing)
+- Roll out slowly per brand or user type
+- Turn off a broken feature instantly
+
+This gives us safe, flexible control over what's live in production.
 
 ## 🧼 Maintainability Principles
 
 This architecture emphasizes maintainability through several deliberate choices:
 
-- **Modular Folder Structure:** The monorepo is divided by feature and domain (e.g., features/, ui/, theme/), which allows teams to work in parallel and isolate changes.
+- **Modular Folder Structure:** The monorepo is organized by features and shared concerns (e.g., features/, ui/, theme/), allowing teams to work in parallel, isolate responsibilities, and reduce cross-impact when making changes.
 - **Type Safety:** TypeScript is used throughout the codebase to catch errors early and provide developer guidance via IDEs.
 - **Shared Component Libraries:** Common UI patterns are abstracted into packages/ui, avoiding duplication and simplifying updates across brands.
 - **Centralized Configuration:** Linting, formatting, testing, and build settings are centralized in .config/, ensuring consistent tooling across teams.
