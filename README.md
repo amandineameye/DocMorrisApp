@@ -269,47 +269,6 @@ We use **styled-components** in this React Native monorepo to ensure a scalable,
 We prioritize **component-level styling, rich theming, code clarity, and TypeScript support.**
 **styled-components** provides the most balanced and future-proof solution for these requirements in a multi-brand React Native app.
 
-## ♻️ Component Reusability Strategy
-
-To support a scalable, multi-brand architecture, the app leverages a shared `@repo/ui` package that contains all core UI components. These components are brand-agnostic and derive their visual styling from theme tokens injected at runtime from the `@repo/theme` package.
-
-### Design Principles
-
-All components in `@repo/ui` are:
-
-- **Stateless** and driven by props and theme values.
-- **Compatible with `styled-components/native`**, enabling runtime theming.
-- **Generic and composable**, such as `Button`, `Card`, `Modal`, or `TextField`.
-- Built following **accessibility** and **performance** best practices.
-
-This setup ensures:
-
-- A **single source of truth** for UI elements.
-- **No duplication** across brand implementations.
-- **Consistent design language** and faster iteration.
-
-### Brand Customization via `@repo/theme`
-
-All brand-specific tokens (e.g. colors, fonts, spacing) are declared in the `@repo/theme` package, which also exposes the `BrandProvider` and `useBrand` hook for brand context access.
-
-Each app provides its own `brandConfig`, extending a shared base with runtime assets like logos, ads, and product images.
-
-```tsx
-// apps/docmorris/App.tsx
-import { BrandProvider } from '@repo/theme/context'
-import { brandConfig } from './brandConfig'
-
-export default function App() {
-  return (
-    <BrandProvider config={brandConfig}>
-      <TabsNavigator />
-    </BrandProvider>
-  )
-}
-```
-
-- `BrandProvider` injects the current brand's `theme` using `ThemeProvider`.
-- All `@repo/ui` components consume `theme` values directly—no need for brand-specific logic.
 
 ## ♻️ Component Reusability Strategy
 
@@ -320,7 +279,6 @@ To support true multi-brand scalability, the `@repo/theme` package centralizes a
 - **BrandProvider**: A wrapper that applies brand-specific config to the app.
 - **useBrand hook**: Provides access to brand-specific theme and runtime assets (e.g. logos, product images, ad banners).
 
----
 
 ### How it works
 
@@ -344,7 +302,6 @@ export default function App() {
 }
 ```
 
----
 
 ### What does `BrandProvider` actually do?
 
@@ -358,7 +315,6 @@ Internally, `BrandProvider` wraps your app with two powerful layers:
 
 That means all your UI components automatically reflect the selected brand’s look & feel — without having to write any brand logic in them.
 
----
 
 ### Why this matters
 
@@ -369,7 +325,6 @@ That means all your UI components automatically reflect the selected brand’s l
 | ⚡ Easy brand switching | Just swap out `brandConfig` — the entire app updates its look. |
 | 🧪 Testable and maintainable | You can test components in isolation, independent of branding. |
 
----
 
 ### Theme Structure (from `@repo/theme`)
 
