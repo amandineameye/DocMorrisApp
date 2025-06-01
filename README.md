@@ -123,21 +123,20 @@ libs/
 #### Why We Chose Turborepo
 
 - **Simplicity and Flexibility:** Turborepo offers a lightweight, flexible approach that aligns well with JavaScript/TypeScript projects, especially those using React or React Native.
-- **Zero-config build pipelines:** You can define tasks (build, lint, test) per package using existing package.json scripts, and Turbo handles caching, parallel execution, and dependency ordering automatically.
-- **Remote Caching:** With Vercel’s remote caching, teams can share build artifacts across environments, drastically reducing CI/CD times.
-- **Tooling Agnostic:** Unlike Nx, Turborepo doesn’t impose opinionated plugins or CLI wrappers. You can use native tools like Metro, Jest, ESLint, and TypeScript directly.
-- **Ideal for custom React Native setups:** For teams using custom configurations or non-standard workflows, Turborepo avoids the complexity and learning curve that Nx sometimes introduces.
+- **Independent app builds with automatic dependency ordering:** Each app defines its own build, lint, and test tasks via package.json scripts. Turborepo enables running them independently, while ensuring shared packages (like ui or features) are built first based on dependencies.
+- **Tooling Agnostic:** Turborepo doesn’t impose opinionated plugins or wrappers, making it ideal for teams with custom Metro, Jest, or TypeScript setups. You can use your tools directly, without the extra complexity Nx sometimes adds.
 
 #### What Are Workspaces
 
+- Workspaces are the building blocks of a monorepo. Each one can be treated like its own package and used in other workspaces — just like installing a dependency from npm.
 - Turborepo relies on native workspace protocols from npm, yarn, or pnpm.
 - Each package (like features/prescriptions, ui/, or apps/docmorris) is listed as a workspace in the root-level package.json
-- Turborepo uses a turbo.json file to orchestrate tasks and manage caching across these workspaces.
+
 
 Each workspace (app or package) should have its own **package.json** to define:
 
-- Its name, dependencies, and scripts.
-- This lets Turborepo treat it as a modular unit with independent lifecycle hooks.
+- Its name, dependencies, exports, and scripts.
+- This allows Turborepo to run, build, and test each app on its own.
 
 **`package.json`**
 
@@ -145,6 +144,9 @@ Each workspace (app or package) should have its own **package.json** to define:
 {
   "name": "docmorris",
   "version": "1.0.0",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "scripts": {
     "start": "react-native start",
     "android": "react-native run-android",
@@ -153,16 +155,7 @@ Each workspace (app or package) should have its own **package.json** to define:
 }
 ```
 
-For applications (apps/docmorris, apps/brandb), we also include an **app.json** file to:
-
-- Define internal app name for build tools.
-- Support CodePush, deep linking, and branded build scripts.
-
-These files are required to enable:
-
-- Smooth workspace dependency resolution
-- Clear build artifact definitions
-- Isolated development and deployment of apps and features
+Each app (e.g. apps/docmorris, apps/brandb) includes an app.json to define the app name, branding, and settings for CodePush, deep linking, and build tools. This also helps with workspace resolution and isolated builds.
 
 ### Setting Up a Turborepo Monorepo
 
@@ -180,7 +173,7 @@ npx create-turbo@latest
 {
   "name": "my-turbo-workspace",
   "private": true,
-  "workspaces": ["apps/*", "packages/*", "libs/*"],
+  "workspaces": ["apps/*", "packages/*/*", "libs/*"],
   "devDependencies": {
     "turbo": "^1.10.0"
   },
@@ -192,13 +185,7 @@ npx create-turbo@latest
 }
 ```
 
-3. Configure workspaces in root package.json:
-
-```ts
-"workspaces": ["apps/*", "packages/*/*", "packages/*", "libs/*"]
-```
-
-4. Add Your Apps and Packages
+3. Add Your Apps and Packages
 
 - Create individual folders under apps/, packages/, and libs/:
 - Each should have a package.json with its name and dependencies.
@@ -215,7 +202,7 @@ libs/
   └── utils/
 ```
 
-5. Run Your Tasks
+4. Run Your Tasks
 
 Use Turborepo to execute scripts across packages:
 
@@ -225,26 +212,29 @@ npm run build
 npm run lint
 ```
 
-Only affected packages will run, with task caching and parallel execution.
+Only affected packages will run.
 
 ### Feature Scaffolding
 
-Each feature in the packages/features/ directory is structured to encapsulate all logic, UI, and domain responsibilities for that vertical. This modular layout ensures team autonomy, reusability, and testability.
+Each folder in packages/features/ is a self-contained feature module. It includes the feature's own UI, screens, logic, and tests — making it easy for teams to develop independently.
 
-- Ensures every feature is independently testable and deployable.
-- Promotes domain ownership — each team maintains their feature’s folder.
-- Allows features to be loaded modularly and support lazy loading if needed.
+However, shared logic like reusable hooks or API clients lives in dedicated packages like packages/hooks/ and packages/api/, outside the features/ folder. This keeps features clean and avoids code duplication.
+
+Benefits:
+
+- Features are modular, testable, and owned by specific teams
+- Encourages clear separation between feature-specific and shared logic
 
 ```
 packages/features/<feature-name>/
   src/
-    components/     # Shared presentational components
-    screens/        # Entry-point screens used in navigation
+    components/     # Reusable UI pieces (only for this feature)
+    screens/        # Entry-point screens for navigation
     hooks/          # Feature-specific logic hooks
-    services/       # Data fetchers, handlers, and domain logic
-  __tests__/        # Unit & integration tests
+    services/       # Feature-local data fetching or domain logic
+  __tests__/        # Unit and integration tests
   index.ts          # Public API entry
-  package.json      # Defines the feature as a workspace
+  package.json      # Declares the feature as its own workspace
 ```
 
 ## 🎨 Styling Strategy
