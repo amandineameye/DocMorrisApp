@@ -59,16 +59,18 @@ This document outlines the architectural and technical decisions for building a 
 - **React Native Testing Library** — Component testing
 - **Detox** — E2E testing on real devices/simulators
 
-### Deployment Tooling
-
-- **CodePush** — OTA updates for JS bundles
-- **Fastlane** — Build automation for App Store & Play Store
-- **Bitrise** — CI/CD orchestrator integrated with GitHub
-
-### Automation
+### Deployment and Automation Tooling
 
 - **GitHub Actions** — CI tasks: linting, unit tests, build checks
 - **Bitrise** — Runs E2E tests, builds, and deploys apps to testers
+- **Fastlane** — Build automation for App Store & Play Store
+- **CodePush** — OTA updates for JS bundles
+
+### Internal Testing 
+
+- **Firebase App Distribution (Android):** Used to send test builds quickly to the team. Great for early testing and fast feedback.
+- **TestFlight (IOS):** Apple’s official testing tool. 
+- **Play Store Internal Track (Android):** Used to test the app through the real Play Store. It works like a real release, allowing to catch store-related issues before launch.
 
 ### Monitoring & Feature Flags
 
@@ -601,53 +603,13 @@ E2E coverage ensures the full customer journey is reproducible, including platfo
 - Detox is built specifically for React Native E2E testing. It runs directly on iOS and Android emulators with synchronization features, making it faster and more stable than Appium.
 - It handles native modules like NFC and camera permissions reliably — critical for testing e-prescription and hardware flows.
 
-## 🚀 Deployment Strategy
+## ⚙️ Automation & Deployment Strategy
 
-### Internal Testing Channels
-
-To support pre-release validation and iterative QA:
-
-- Firebase App Distribution (Android): Quick delivery to internal testers.
-- TestFlight (iOS): Seamless testing experience for Apple testers.
-- Play Store Internal Track: For staging Android releases before public rollout.
-
-### CI-Triggered Build Pipelines
-
-- Merges to develop or release/\* trigger Bitrise workflows.
-- Workflows automatically:
-  - Run tests
-  - Build artifacts
-  - Upload to Firebase/TestFlight
-- Testers receive links with install instructions.
-
-### CodePush Deployment Script
-
-For JavaScript-only updates that don’t require app store approval.
-
-```ts
-import { execSync } from 'child_process';
-
-const apps = [
-  { name: 'docmorris', platform: 'ios', deployment: 'Staging' },
-  { name: 'docmorris', platform: 'android', deployment: 'Staging' },
-  { name: 'brandb', platform: 'ios', deployment: 'Staging' },
-  { name: 'brandb', platform: 'android', deployment: 'Staging' },
-];
-
-apps.forEach(app => {
-  const cmd = \`appcenter codepush release-react -a your-org/\${app.name}-\${app.platform}     -d \${app.deployment} --mandatory --description "Release update for \${app.name}"\`;
-  console.log(\`Deploying \${app.name}\`);
-  execSync(cmd, { stdio: 'inherit' });
-});
-```
-
-## ⚙️ Automation Pipeline
-
-Our pipeline is designed for fast feedback, automated testing, and zero-touch deployments. It bridges the gap between development and delivery, ensuring each change is validated, tested, and delivered without unnecessary manual steps.
+Our pipeline is designed for **fast feedback**, **automated testing**, and **zero-touch delivery** across brands. It supports both full native releases and instant JavaScript-only updates via **CodePush**.
 
 ### How It Works
 
-Below is a high-level diagram describing the automation flow:
+Below is a high-level overview of the automated flow:
 
 ```
 [ Git Push / PR ]
@@ -655,7 +617,8 @@ Below is a high-level diagram describing the automation flow:
 [ GitHub Actions CI ]
   ├── Lint
   ├── Unit Tests (Jest)
-  └── Build Check
+  ├── Build Check
+  └── (Optional) CodePush Release (JS-only)
       ↓
 [ Bitrise Workflow Triggered ]
   ├── Dependency Install
@@ -669,22 +632,26 @@ Below is a high-level diagram describing the automation flow:
 [ Tester Notification + Feedback Loop ]
 ```
 
-This flow supports rapid development by ensuring:
+This structure allows us to:
+- Run fast JS-only deployments with **CodePush**.
+- Use **Bitrise** only when native builds or app store releases are needed.
+- Keep app behavior consistent across testing, staging, and production.
 
-- **All commits are verified** with linting, tests, and type checks.
-- **Builds are automatically delivered** to internal testers with proper branding and configuration.
-- **Feedback is streamlined** via distribution platforms (Firebase, TestFlight).
 
 ### CI: GitHub Actions
 
-This is the first line of validation for any code pushed or merged:
+GitHub Actions is the first gate for any pushed or merged code:
 
-- Ensures code style via linting
-- Runs Jest tests to validate local logic
-- Builds the app to catch any compile or configuration errors early
+- Lints and type-checks the codebase
+- Runs unit tests (Jest)
+- Builds apps to ensure no compile/config errors
+- **Optionally triggers CodePush** if the update is JS-only
+- Triggers Bitrise if everything passes
+
+#### Sample Workflow: `.github/workflows/ci.yml`
 
 ```yaml
-name: CI
+name: CI Monorepo
 
 on:
   push:
@@ -693,44 +660,111 @@ on:
     branches: [main, develop]
 
 jobs:
-  test:
+  test-docmorris:
+    name: DocMorris - Lint & Test
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/docmorris
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18'
+      - uses: actions/checkout@v3
       - run: npm install
+      - run: npm run lint
       - run: npm run test
 
-  lint:
+  test-brandb:
+    name: BrandB - Lint & Test
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/brandb
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - run: npm install
       - run: npm run lint
+      - run: npm run test
 
-  build:
+  codepush:
+    name: CodePush Release
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/release/js-only'
+    steps:
+      - uses: actions/checkout@v3
+      - run: npm install
+      - run: node scripts/deploy-codepush.js
+
+  trigger-bitrise:
+    needs: [test-docmorris, test-brandb]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - run: npm run build
+      - name: Trigger Bitrise build
+        run: |
+          curl -X POST https://api.bitrise.io/v0.1/apps/YOUR_APP_SLUG/builds \
+          -H "Authorization: ${{ secrets.BITRISE_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "hook_info": { "type": "bitrise" },
+            "build_params": {
+              "branch": "${{ github.ref_name }}",
+              "workflow_id": "primary"
+            }
+          }'
 ```
 
-### CD: Bitrise
+### CodePush for OTA Updates
 
-Once CI passes, Bitrise picks up to handle:
+We use CodePush to deliver JavaScript-only updates without needing store approval.
 
-- Dependency installation
-- Detox tests on emulators/simulators
-- Full native builds via Fastlane
-- Uploads artifacts to QA channels for immediate feedback
+- Ideal for UI fixes, logic changes, or A/B experiments.
+- Script automatically pushes bundles to staging channels on App Center.
+
+**Script:** `scripts/deploy-codepush.js`
+
+```js
+import { execSync } from 'child_process';
+
+const apps = [
+  { name: 'docmorris', platform: 'ios', deployment: 'Staging' },
+  { name: 'docmorris', platform: 'android', deployment: 'Staging' },
+  { name: 'brandb', platform: 'ios', deployment: 'Staging' },
+  { name: 'brandb', platform: 'android', deployment: 'Staging' },
+];
+
+apps.forEach(app => {
+  const cmd = \`appcenter codepush release-react -a your-org/\${app.name}-\${app.platform} \
+    -d \${app.deployment} --mandatory --description "Auto CodePush update"\`;
+  console.log(\`Deploying \${app.name}\`);
+  execSync(cmd, { stdio: 'inherit' });
+});
+```
+
+### CD: Bitrise Workflows
+
+Bitrise takes over after CI passes to:
+
+- Install dependencies
+- Run Detox E2E tests
+- Build native apps via Fastlane
+- Distribute builds to QA channels
 
 ```bash
-Git clone → Install dependencies → Run E2E tests (Detox) → Build → Deploy
+Git clone → Install deps → Run E2E tests → Build → Deploy
 ```
 
-This division of labor ensures both speed and safety across teams and platforms.
+**Deployment targets:**
+- **Firebase App Distribution** for Android testers
+- **TestFlight** for internal iOS testing
+- **Play Store Internal Track** for pre-release Android staging
+
+### Why This Setup Works
+
+| Step            | Tool             | Purpose                                    |
+|-----------------|------------------|--------------------------------------------|
+| CI              | GitHub Actions   | Validate code, run tests, trigger builds   |
+| OTA Deployment  | CodePush         | Ship JS-only updates instantly             |
+| Native Build/CD | Bitrise + Fastlane | Full iOS/Android builds & testing       |
+| Distribution    | Firebase / TestFlight / Play Store | Real-world QA |
+
 
 ## 📡 Monitoring, Tracking & Feature Flagging
 
