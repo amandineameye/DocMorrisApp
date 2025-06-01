@@ -756,7 +756,7 @@ Git clone → Install deps → Run E2E tests → Build → Deploy
 - **TestFlight** for internal iOS testing
 - **Play Store Internal Track** for pre-release Android staging
 
-### Why This Setup Works
+### In a nutshell
 
 | Step            | Tool             | Purpose                                    |
 |-----------------|------------------|--------------------------------------------|
