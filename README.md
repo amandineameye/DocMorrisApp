@@ -384,7 +384,8 @@ The native layer plays a critical role in enabling hardware-dependent functional
   - Deep linking (to support navigation via external URLs or notifications)
   - Push notifications (for order updates and reminders)
   - Access to the Secure Enclave / Keychain (for sensitive health data)
-    These features are made available via native modules (e.g. react-native-nfc-manager, react-native-camera-kit, react-native-encrypted-storage) and are tightly integrated into the mobile workflows while respecting platform-specific requirements.
+
+These features are made available via native modules (e.g. react-native-nfc-manager, react-native-camera-kit, react-native-encrypted-storage) and are tightly integrated into the mobile workflows while respecting platform-specific requirements.
 
 ### E-Prescriptions (eGK, QR)
 
