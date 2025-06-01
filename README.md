@@ -395,27 +395,33 @@ These features are made available via native modules (e.g. react-native-nfc-mana
 import NfcManager, { NfcTech } from 'react-native-nfc-manager'
 
 // This function starts an NFC session and reads data from an NFC tag (e.g. an eGK health card)
+
 export async function readEGK() {
 
   // Step 1: Initialize the NFC manager to make sure the NFC hardware is ready
+
   await NfcManager.start()
 
   try {
 
     // Step 2: Request access to a specific NFC technology — here we're using NDEF,
     // which is a common data format for NFC tags (used in many cards and e-documents)
+
     await NfcManager.requestTechnology(NfcTech.Ndef)
 
     // Step 3: Wait for the user to scan their card.
     // Once a compatible NFC tag is detected, get its data.
+
     const tag = await NfcManager.getTag()
 
     // Step 4: Return the tag object, which contains the card’s data.
+
     return tag
   } finally {
 
     // Step 5: Always clean up after the read attempt (success or fail)
     // This stops the NFC session and releases the hardware
+
     NfcManager.cancelTechnologyRequest()
   }
 }
@@ -430,9 +436,11 @@ import { View, Text, StyleSheet } from 'react-native';
 import { CameraKitCameraScreen } from 'react-native-camera-kit';
 
 // This component opens the camera and scans QR codes using the react-native-camera-kit library
+
 export const QRScanner = () => {
 
   // State to store the scanned QR code result
+
   const [scannedCode, setScannedCode] = useState<string | null>(null);
 
   return (
@@ -440,18 +448,21 @@ export const QRScanner = () => {
       {scannedCode ? (
 
         // If a QR code has been scanned, display the result text
+
         <Text style={styles.resultText}>Scanned QR: {scannedCode}</Text>
       ) : (
 
         // Otherwise, show the camera view for scanning
+
         <CameraKitCameraScreen
           showFrame={true} // Show a visual frame to help the user align the QR code
           scanBarcode={true} // Enable barcode/QR scanning
           laserColor="blue" // Color of the scanning laser
           frameColor="green" // Color of the scanning frame border
           onReadCode={(event) => {
-            
+
             // When a QR code is read, extract the value and update state
+
             setScannedCode(event.nativeEvent.codeStringValue);
           }}
         />
@@ -461,6 +472,7 @@ export const QRScanner = () => {
 };
 
 // Basic styling for layout
+
 const styles = StyleSheet.create({
   container: { flex: 1 }, // Full screen
   resultText: { fontSize: 18, padding: 16 }, // Style for displaying the scanned result
