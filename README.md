@@ -449,15 +449,19 @@ When a QR or NFC-based e-prescription is redeemed, the following is transmitted 
 - Medication information (drug name, dosage, quantity)
 - Patient and prescriber identifiers (pseudonymized or hashed)
 - Timestamp and submission source (QR vs NFC)
-- Verification status (e.g. signature validity)
 
 Only what's needed is stored:
 
-- Task ID, metadata, and fulfillment status
-- Audit logs for legal compliance
+- Task ID, metadata (drug name, status, timestamps), and fulfillment status
+- Audit logs for legal compliance (e.g. who scanned what, when)
 - Sensitive payloads are encrypted, never stored in plain text
 
-Security best practices include TLS transport, encrypted storage, user authentication, and GDPR-compliant handling.
+Security best practices include:
+
+- **TLS transport:** All data sent from app to backend is encrypted.
+- **Encrypted storage:** Sensitive payloads are encrypted, never stored in plain text.
+- **User authentication:** Only logged-in users (like patients or pharmacists) can send or access the data.
+- **GDPR-compliant handling:** (You anonymize or pseudonymize personal data, and don’t store unnecessary details).
 
 ## 💾 Local Storage Strategy
 
