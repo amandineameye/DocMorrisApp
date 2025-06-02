@@ -243,39 +243,7 @@ packages/features/<feature-name>/
   package.json      # Declares the feature as its own workspace
 ```
 
-## 🎨 Styling Strategy
-
-We use **styled-components** in this React Native monorepo to ensure a scalable, brand-themable, and maintainable styling system.
-
-### Why styled-components?
-
-- **Scoped styles, clean JSX:** Styles are defined alongside component logic, but without cluttering the render code. This preserves both readability and separation of concerns.
-- **Dynamic theming via ThemeProvider:** Inject a full theme object contextually (e.g., per brand) and access it in all styled components with full type support.
-- **Flexible styling for all components:** Supports styling any native or custom component — no need to adopt wrapper-specific primitives.
-- **Dynamic styling via props and logic:** Write expressive, condition-based styles using regular JavaScript and component props.
-- **Seamless TypeScript support:** Get autocomplete for props and theme tokens like colors.primary, plus instant type checking and IDE feedback.
-
-### Why not NativeWind?
-
-- Clutters JSX with long Tailwind class strings
-- Violates separation of concerns by embedding style logic in markup
-- Poor visibility and readability when classes are conditional or deeply nested
-- Difficult to implement dynamic theming or runtime brand switching
-- Tailwind classes are untyped string literals — no type safety, no autocomplete, no validation
-- Error-prone and harder to maintain in large codebases
-
-### Why not Restyle?
-
-- You can only use Restyle’s theming with its own components like `<Box>` or `<Text>`.
-- Native or third-party components (like from libraries) need extra wrappers to use the same styles.
-- When you mix your own components with native and library ones, styling becomes inconsistent and harder to manage.
-- It's not straightforward to apply styles based on props or state in a clean way.
-- Autocomplete and type checking work, but are limited.
-
-We prioritize **component-level styling, rich theming, code clarity, and TypeScript support.**
-**styled-components** provides the most balanced and future-proof solution for these requirements in a multi-brand React Native app.
-
-## ♻️ Component Reusability Strategy
+## ♻️ Scalable Brand Theming
 
 To support true multi-brand scalability, the `@repo/theme` package centralizes all brand-specific tokens and runtime assets — enabling each app to seamlessly apply its own branding **without duplicating UI code**.
 
@@ -373,6 +341,38 @@ const StyledButton = styled.TouchableOpacity\`
 | App           | Selects brand config and injects it at runtime        |
 
 This modular layering ensures that the UI is fully reusable while supporting unique branding per app instance.
+
+## 🎨 Styling Strategy
+
+We use **styled-components** in this React Native monorepo to ensure a scalable, brand-themable, and maintainable styling system.
+
+### Why styled-components?
+
+- **Scoped styles, clean JSX:** Styles are defined alongside component logic, but without cluttering the render code. This preserves both readability and separation of concerns.
+- **Dynamic theming via ThemeProvider:** Inject a full theme object contextually (e.g., per brand) and access it in all styled components with full type support.
+- **Flexible styling for all components:** Supports styling any native or custom component — no need to adopt wrapper-specific primitives.
+- **Dynamic styling via props and logic:** Write expressive, condition-based styles using regular JavaScript and component props.
+- **Seamless TypeScript support:** Get autocomplete for props and theme tokens like colors.primary, plus instant type checking and IDE feedback.
+
+### Why not NativeWind?
+
+- Clutters JSX with long Tailwind class strings
+- Violates separation of concerns by embedding style logic in markup
+- Poor visibility and readability when classes are conditional or deeply nested
+- Difficult to implement dynamic theming or runtime brand switching
+- Tailwind classes are untyped string literals — no type safety, no autocomplete, no validation
+- Error-prone and harder to maintain in large codebases
+
+### Why not Restyle?
+
+- You can only use Restyle’s theming with its own components like `<Box>` or `<Text>`.
+- Native or third-party components (like from libraries) need extra wrappers to use the same styles.
+- When you mix your own components with native and library ones, styling becomes inconsistent and harder to manage.
+- It's not straightforward to apply styles based on props or state in a clean way.
+- Autocomplete and type checking work, but are limited.
+
+We prioritize **component-level styling, rich theming, code clarity, and TypeScript support.**
+**styled-components** provides the most balanced and future-proof solution for these requirements in a multi-brand React Native app.
 
 ## 📲 Native Integrations
 
