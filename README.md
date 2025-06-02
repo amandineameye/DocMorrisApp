@@ -5,6 +5,7 @@
 This document outlines the architectural and technical decisions for building a cross-platform mobile app for two licensed online pharmacy brands under **DocMorris N.V.**, targeting both Android and iOS platforms. The architecture emphasizes scalability, maintainability, team collaboration, and compliance with healthcare data regulations in Germany.
 
 Key project characteristics include:
+
 - Functional parity across both brands, with distinct theming and branding per app.
 - A team structure of 5 mobile development squads and 1 backend team, collaborating in parallel.
 - Secure and performant support for e-prescription workflows, including QR code scanning and NFC health card integration.
@@ -70,10 +71,10 @@ Key project characteristics include:
 - **Fastlane** — Build automation for App Store & Play Store
 - **CodePush** — OTA updates for JS bundles
 
-### Internal Testing 
+### Internal Testing
 
 - **Firebase App Distribution (Android):** Send test builds quickly to the team. Great for early testing and fast feedback.
-- **TestFlight (IOS):** Apple’s official testing tool. 
+- **TestFlight (IOS):** Apple’s official testing tool.
 - **Play Store Internal Track (Android):** Used to test the app through the real Play Store. Works like a real release, allowing to catch store-related issues before launch.
 
 ### Monitoring & Feature Flags
@@ -137,7 +138,6 @@ libs/
 - Workspaces are the building blocks of a monorepo. Each one can be treated like its own package and used in other workspaces — just like installing a dependency from npm.
 - Turborepo relies on native workspace protocols from npm, yarn, or pnpm.
 - Each package (like features/prescriptions, ui/, or apps/docmorris) is listed as a workspace in the root-level package.json
-
 
 Each workspace (app or package) should have its own **package.json** to define:
 
@@ -275,20 +275,20 @@ We use **styled-components** in this React Native monorepo to ensure a scalable,
 We prioritize **component-level styling, rich theming, code clarity, and TypeScript support.**
 **styled-components** provides the most balanced and future-proof solution for these requirements in a multi-brand React Native app.
 
-
 ## ♻️ Component Reusability Strategy
 
 To support true multi-brand scalability, the `@repo/theme` package centralizes all brand-specific tokens and runtime assets — enabling each app to seamlessly apply its own branding **without duplicating UI code**.
 
 ### What’s in `@repo/theme`?
+
 - **Specific brand theme objects**: Colors, fonts, spacing — typed and structured for consistency.
 - **BrandProvider**: A wrapper that applies brand-specific config to the app.
 - **useBrand hook**: Provides access to brand-specific theme and runtime assets (e.g. logos, product images, ad banners).
 
-
 ### How it works
 
 Each app (e.g. DocMorris, BrandB) defines its own `brandConfig`, which includes:
+
 - A theme object (e.g. `docMorrisTheme`) with color/font tokens
 - Runtime brand assets (e.g. logos, images, banners)
 
@@ -308,7 +308,6 @@ export default function App() {
 }
 ```
 
-
 ### What does `BrandProvider` actually do?
 
 Internally, `BrandProvider` wraps your app with two powerful layers:
@@ -321,16 +320,14 @@ Internally, `BrandProvider` wraps your app with two powerful layers:
 
 That means all your UI components automatically reflect the selected brand’s look & feel — without having to write any brand logic in them.
 
-
 ### Why this matters
 
-| Benefit | What it means |
-|--------|----------------|
-| Fully reusable UI | Components like `Button`, `Card`, `SearchBar` don’t know or care what brand they’re in. |
-| Centralized theming | All visual styles come from a single source: the theme tokens in `@repo/theme`. |
-| Easy brand switching | Just swap out `brandConfig` — the entire app updates its look. |
-| Testable and maintainable | You can test components in isolation, independent of branding. |
-
+| Benefit                   | What it means                                                                           |
+| ------------------------- | --------------------------------------------------------------------------------------- |
+| Fully reusable UI         | Components like `Button`, `Card`, `SearchBar` don’t know or care what brand they’re in. |
+| Centralized theming       | All visual styles come from a single source: the theme tokens in `@repo/theme`.         |
+| Easy brand switching      | Just swap out `brandConfig` — the entire app updates its look.                          |
+| Testable and maintainable | You can test components in isolation, independent of branding.                          |
 
 ### Theme Structure (from `@repo/theme`)
 
@@ -375,7 +372,7 @@ const StyledButton = styled.TouchableOpacity\`
 | `@repo/ui`    | Generic, theme-aware components                       |
 | App           | Selects brand config and injects it at runtime        |
 
-This modular layering ensures that the UI is fully reusable while supporting unique branding per app instance. 
+This modular layering ensures that the UI is fully reusable while supporting unique branding per app instance.
 
 ## 📲 Native Integrations
 
@@ -403,13 +400,11 @@ import NfcManager, { NfcTech } from 'react-native-nfc-manager'
 // This function starts an NFC session and reads data from an NFC tag (e.g. an eGK health card)
 
 export async function readEGK() {
-
   // Step 1: Initialize the NFC manager to make sure the NFC hardware is ready
 
   await NfcManager.start()
 
   try {
-
     // Step 2: Request access to a specific NFC technology — here we're using NDEF,
     // which is a common data format for NFC tags (used in many cards and e-documents)
 
@@ -424,14 +419,12 @@ export async function readEGK() {
 
     return tag
   } finally {
-
     // Step 5: Always clean up after the read attempt (success or fail)
     // This stops the NFC session and releases the hardware
 
     NfcManager.cancelTechnologyRequest()
   }
 }
-
 ```
 
 **Sample QR Code Scanner**
@@ -523,7 +516,6 @@ Examples: Theme preference, onboarding status
 - Encryption supported, but optional for this layer
 - Used to persist non-critical app state between launches
 
-
 ### Sensitive Data
 
 This includes e-prescriptions, tokens, patient IDs, and any information protected under GDPR and BfArM compliance.
@@ -585,17 +577,19 @@ Tests follow a colocated structure:
 ### E2E Testing
 
 - We use Detox for end-to-end flows — prescription redemption, QR scanning, authentication, checkout etc.
-- Tests run on both iOS and Android simulators/emulators as part of our CI pipeline (Bitrise).  
+- Tests run on both iOS and Android simulators/emulators as part of our CI pipeline (Bitrise).
 
 E2E coverage ensures the full customer journey is reproducible, including platform-specific permissions like camera access and NFC handshakes.
 
 ### Why These Testing Libraries?
 
-**Jest** → Chosen over Mocha, AVA, etc.  
+**Jest** → Chosen over Mocha, AVA, etc.
+
 - Jest is the de facto standard for JavaScript/TypeScript unit testing.
 - It's widely supported in React Native ecosystems and integrates smoothly with monorepos — ideal for testing isolated business logic and hooks.
 
-**React Native Testing Library (RNTL)** → Chosen over Enzyme or shallow rendering  
+**React Native Testing Library (RNTL)** → Chosen over Enzyme or shallow rendering
+
 - RNTL encourages testing components as users interact with them, not by inspecting internal state. For example:
 
 ✅ “Does the spinner appear when I press the button?”  
@@ -603,7 +597,8 @@ E2E coverage ensures the full customer journey is reproducible, including platfo
 
 - Unlike Enzyme, which is not well-maintained for React Native, RNTL fully supports styled-components and themed rendering.
 
-**Detox** → Chosen over Appium or manual QA  
+**Detox** → Chosen over Appium or manual QA
+
 - Detox is built specifically for React Native E2E testing. It runs directly on iOS and Android emulators with synchronization features, making it faster and more stable than Appium.
 - It handles native modules like NFC and camera permissions reliably — critical for testing e-prescription and hardware flows.
 
@@ -637,10 +632,10 @@ Below is a high-level overview of the automated flow:
 ```
 
 This structure allows us to:
+
 - Run fast JS-only deployments with **CodePush**.
 - Use **Bitrise** only when native builds or app store releases are needed.
 - Keep app behavior consistent across testing, staging, and production.
-
 
 ### CI: GitHub Actions
 
@@ -756,19 +751,19 @@ Git clone → Install deps → Run E2E tests → Build → Deploy
 ```
 
 **Deployment targets:**
+
 - **Firebase App Distribution** for Android testers
 - **TestFlight** for internal iOS testing
 - **Play Store Internal Track** for pre-release Android staging
 
 ### In a nutshell
 
-| Step            | Tool             | Purpose                                    |
-|-----------------|------------------|--------------------------------------------|
-| CI              | GitHub Actions   | Validate code, run tests, trigger builds   |
-| OTA Deployment  | CodePush         | Ship JS-only updates instantly             |
-| Native Build/CD | Bitrise + Fastlane | Full iOS/Android builds & testing       |
-| Distribution    | Firebase / TestFlight / Play Store | Real-world QA |
-
+| Step            | Tool                               | Purpose                                  |
+| --------------- | ---------------------------------- | ---------------------------------------- |
+| CI              | GitHub Actions                     | Validate code, run tests, trigger builds |
+| OTA Deployment  | CodePush                           | Ship JS-only updates instantly           |
+| Native Build/CD | Bitrise + Fastlane                 | Full iOS/Android builds & testing        |
+| Distribution    | Firebase / TestFlight / Play Store | Real-world QA                            |
 
 ## 📡 Monitoring, Tracking & Feature Flagging
 
@@ -793,7 +788,7 @@ We track how people use the app to improve UX and feature adoption:
 
 This helps us see what works, what’s confusing, and where users drop off.
 
-### Feature Flags
+### Feature Flags (Remote Feature Control)
 
 We don’t have to release every feature to everyone at once. Instead, we use:
 
