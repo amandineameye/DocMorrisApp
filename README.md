@@ -87,38 +87,6 @@ Key project characteristics include:
 
 ## 🏗️ Architecture
 
-### Repository Structure
-
-```bash
-apps/
-  docmorris/
-  brandb/
-  shared-e2e/
-
-packages/
-  ui/
-  features/
-    discovery/
-    prescription-redemption/
-    checkout/
-    user-account/
-    prescription-services/
-  services/
-  navigation/
-  theme/
-  config/
-  stores/
-
-libs/
-  utils/
-  constants/
-
-.config/
-  jest/
-  detox/
-  eslint/
-```
-
 ### The Monorepo
 
 #### Why We Use a Monorepo
@@ -241,6 +209,38 @@ packages/features/<feature-name>/
   __tests__/        # Unit and integration tests
   index.ts          # Public API entry
   package.json      # Declares the feature as its own workspace
+```
+
+### Repository Structure
+
+```bash
+apps/
+  docmorris/
+  brandb/
+  shared-e2e/
+
+packages/
+  ui/
+  features/
+    discovery/
+    prescription-redemption/
+    checkout/
+    user-account/
+    prescription-services/
+  services/
+  navigation/
+  theme/
+  config/
+  stores/
+
+libs/
+  utils/
+  constants/
+
+.config/
+  jest/
+  detox/
+  eslint/
 ```
 
 ## ♻️ Scalable Brand Theming
