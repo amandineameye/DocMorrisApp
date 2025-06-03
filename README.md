@@ -323,7 +323,7 @@ Each brand exports its own variant (`docMorrisTheme`, `brandBTheme`) from `@repo
 
 ```tsx
 const StyledButton = styled.TouchableOpacity`
-  background-color: \${({ theme }) => theme.colors.primary.primary1};
+  background-color: ${({ theme }) => theme.colors.primary.primary1};
   padding: 12px;
   border-radius: 6px;
 `
