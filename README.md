@@ -322,11 +322,11 @@ Each brand exports its own variant (`docMorrisTheme`, `brandBTheme`) from `@repo
 ### Example: Themed Component from `@repo/ui`
 
 ```tsx
-const StyledButton = styled.TouchableOpacity\`
+const StyledButton = styled.TouchableOpacity`
   background-color: \${({ theme }) => theme.colors.primary.primary1};
   padding: 12px;
   border-radius: 6px;
-\`;
+`
 ```
 
 - No brand logic in `@repo/ui`.
