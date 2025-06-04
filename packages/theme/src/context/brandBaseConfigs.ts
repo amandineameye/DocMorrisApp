@@ -17,7 +17,7 @@ export const brandBaseConfigs: Record<BrandId, BrandBaseConfig> = {
     theme: docMorrisTheme,
   },
   brandb: {
-    name: 'BrandB',
+    name: 'MockMorris',
     theme: brandBTheme,
   },
 }
