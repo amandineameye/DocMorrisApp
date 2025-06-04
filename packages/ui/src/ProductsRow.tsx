@@ -58,7 +58,7 @@ const RowHeader = styled.View`
 export const RowTitle = styled.Text`
   font-size: 18px;
   font-weight: 600;
-  font-family: 'Poppins';
+  font-family: ${({ theme }) => theme.fonts.caption['1'].regular.fontFamily};
   color: ${({ theme }) => theme?.colors.secondary.secondary1};
 `
 
